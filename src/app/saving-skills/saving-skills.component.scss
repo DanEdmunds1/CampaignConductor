@@ -1,0 +1,56 @@
+.bottom-right-box {
+
+
+    .saving-throws-box {
+        margin: 20px;
+        border: 1px black solid;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+
+        h4 {
+            align-self: center;
+            margin: 10px 0 15px 0;
+        }
+
+        p {
+            margin: 0 0 20px 10px;
+            span {
+                border: 1px solid black;
+                border-radius: 90px;
+                padding: 5px;
+            }
+        }
+
+
+    }
+
+    .skills-box {
+        margin: 20px;
+        border: 1px black solid;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+
+        height: 300px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: justify;
+
+
+        h4 {
+            align-self: center;
+            margin: 10px 0 15px 0;
+        }
+
+        p {
+            margin: 0 0 20px 10px;
+            span {
+                border: 1px solid black;
+                border-radius: 90px;
+                padding: 5px;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,40 @@
+<div class="weapons-and-spellcasting">
+    <h4>Weapons & Spellcasting</h4>
+
+    <section class="weapons-box">
+        <article class="headers">
+            <p>NAME</p>
+            <p>ATK BONUS</p>
+            <p>DMG DICE</p>
+            <p>DMG TYPE</p>
+        </article>
+
+        <!-- Iterate through all weapons
+            Give class "weapon"
+            Use class binding to add another class "selected" and listen for  click event
+            Click event that toggles a value
+        -->
+        <div *ngFor="let weapon of weapons" class="weapon" 
+        [class.selected]="weapon === selectedWeapon" (click)="toggleSelectedWeapon(weapon)">
+            <p>{{weapon.name}}</p>
+            <!-- If a weapon has an attack bonus, add that to prof bonus, if not, only display prof bonus -->
+            <p *ngIf="weapon.atkBonus">(+{{this.profBonus + weapon.atkBonus}})</p>
+            <p *ngIf="!weapon.atkBonus">(+{{this.profBonus}})</p>
+            <p>{{weapon.dmgDice}}</p>
+            <p>{{weapon.dmgType}}</p>
+        </div>
+    </section>
+
+    <section class="spells-box">
+        <select name="spells" id="spells">
+            <option>Spells</option>
+            <option *ngFor="let spell of spells" value="{{spell.name}}">{{spell.name}} - {{spell.dmgDice}} -
+                {{spell.dmgType}}</option>
+        </select>
+
+        <div class="atk-button">
+            <p>Attack</p>
+        </div>
+
+    </section>
+</div>

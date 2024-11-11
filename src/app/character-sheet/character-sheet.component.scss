@@ -1,0 +1,148 @@
+$left-box-margin: 40px;
+
+.attack-sheet {
+    width: 100%;
+
+    .top-row {
+        display: flex;
+        margin-top: 20px;
+        margin-left: 20px;
+        justify-content: space-around;
+
+        .top-left-box {
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 150px;
+                width: 150px;
+                margin-right: $left-box-margin;
+
+
+            }
+
+
+                h2 {
+                    padding: 10px;
+                    align-self: center;
+                    margin-right: $left-box-margin;
+                    font-size: 40px;
+                }
+            
+
+
+        }
+
+        .top-right-box {
+
+            .titles-box {
+                display: flex;
+                flex-direction: row;
+
+                border: 1px solid black;
+                border-radius: 3px;
+
+                .titles-area {
+                    display: flex;
+                    flex-direction: column;
+
+                    // Show titles in a row
+                    .title-row {
+                        display: flex;
+
+                        // Center and arrange titles
+                        .title {
+                            margin: 0 20px 0 20px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+
+                            .title-name {
+                                font-size: 12px;
+                                text-decoration: underline;
+                                margin-top: 10px;
+
+                            }
+
+                            .title-value {
+                                font-size: 20px;
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+
+            .level-row {
+                display: flex;
+                align-items: center;
+
+                .level-item {
+                    margin: 0 20px 0 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .level-name {
+                        font-size: 12px;
+                        text-decoration: underline;
+                    }
+
+                    .level-value {
+                        font-size: 20px;
+                    }
+                }
+
+
+            }
+
+        }
+
+    }
+
+    .stats-box {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        border: 1px solid #FFD700;
+        
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px 0 10px;
+
+            .mod {
+                color: #FFD700;
+            }
+        }
+    }
+
+    .bottom-half {
+
+
+        .bottom-left-box {
+            
+            margin: 20px;
+
+            .ac-container {
+                height: 100px;
+                width: 100px;
+                background: url("https://i.imgur.com/QZd0Sk7.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        }
+
+    }
+}

@@ -1,0 +1,93 @@
+$box-shadow-distance: 3px;
+
+@mixin weapon-layout {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+@mixin layout-items {
+    text-align: center;
+    width: 100px;
+    margin: 5px;
+}
+
+.weapons-and-spellcasting {
+
+    border: 1px solid #2F4F4F;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70%;
+
+
+    h4 {
+        margin: 10px 0 15px 0;
+    }
+
+    .weapons-box {
+        border: 1px solid brown;
+
+        .headers {
+            @include weapon-layout;
+
+            p {
+                background-color: #FFD700;
+                font-size: smaller;
+                @include layout-items;
+
+            }
+        }
+
+        .weapon {
+            @include weapon-layout;
+
+            p {
+                @include layout-items;
+                background-color: #b5b8b8;
+            }
+        }
+    }
+
+    .spells-box {
+        border: 1px solid silver;
+        display: flex;
+
+
+        .atk-button {
+
+            background-color: #8B0000;
+            border: 1px solid black;
+            border-radius: 90px;
+            box-shadow: $box-shadow-distance $box-shadow-distance;
+
+            width: 80px;
+            height: 80px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin: 10px;
+
+            &:hover {
+                cursor: pointer;
+                box-shadow: none;
+                transform: translate($box-shadow-distance, $box-shadow-distance);
+            }
+
+            p {
+                color: white;
+            }
+        }
+    }
+
+}
+
+
+.selected {
+    p {
+        background-color: #4682B4 !important;
+        // I know it's not generally recommended to use !important but I promise to be good and only use it this once
+    }
+}

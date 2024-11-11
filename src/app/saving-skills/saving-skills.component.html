@@ -1,0 +1,37 @@
+<section class="bottom-right-box">
+    <div *ngFor="let throw of savingThrows" class="saving-throws-box">
+        <h4>Saving Throws</h4>
+        <p><span>{{throw.charisma}}</span> Charisma</p>
+        <p><span>{{throw.wisdom}}</span> Wisdom</p>
+        <p><span>{{throw.intelligence}}</span> Intelligence</p>
+        <p><span>{{throw.constitution}}</span> Constitution</p>
+        <p><span>{{throw.dexterity}}</span> Dexterity</p>
+        <p><span>{{throw.strength}}</span> Strength</p>
+        
+    </div>
+
+    <div *ngFor="let skill of skills" class="skills-box">
+        <h4>Skills</h4>
+        <p><span>{{skill.acrobatics}}</span> Acrobatics (dex)</p>
+        <p><span>{{skill.animalHandling}}</span> Animal Handling (wis)</p>
+        <p><span>{{skill.arcana}}</span> Arcana (int)</p>
+        <p><span>{{skill.athletics}}</span> Athletics (str)</p>
+        <p><span>{{skill.deception}}</span> Deception (cha)</p>
+        <p><span>{{skill.history}}</span> History (int)</p>
+        <p><span>{{skill.insight}}</span> Insight (wis)</p>
+        <p><span>{{skill.intimidation}}</span> Intimidation (cha)</p>
+        <p><span>{{skill.investigation}}</span> Investigation (int)</p>
+        <p><span>{{skill.medicine}}</span> Medicine (wis)</p>
+        <p><span>{{skill.nature}}</span> Nature (int)</p>
+        <p><span>{{skill.perception}}</span> Perception (wis)</p>
+        <p><span>{{skill.performance}}</span> Performance (cha)</p>
+        <p><span>{{skill.persuasion}}</span> Persuasion (cha)</p>
+        <p><span>{{skill.religion}}</span> Religion (int)</p>
+        <p><span>{{skill.stealth}}</span> Stealth (dex)</p>
+        <p><span>{{skill.survival}}</span> Survival (wis)</p>
+        
+
+        
+    </div>
+
+</section>
