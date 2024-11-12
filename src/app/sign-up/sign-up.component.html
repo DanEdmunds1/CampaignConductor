@@ -1,0 +1,33 @@
+<form [formGroup]="createUserForm" (submit)="createUser()" class="signup-form">
+
+    <article class="signup-item">
+        <input 
+        type="username" 
+        name="Username" 
+        required 
+        formControlName="username">
+        <label>Username</label>
+    </article>
+    <article class="signup-item">
+        <input 
+        type="password" 
+        name="Password" 
+        required 
+        formControlName="password">
+        <label>Password</label>
+    </article>
+
+    <article class="signup-item">
+        <label for="isPlayer">User Type</label>
+        <p>A Player will be able to create one character with which they will play the entire campaign</p>
+        <p>A Dungeon Master (DM) will be able to create multiple creatures to attack characters with</p>
+        <select formControlName="isPlayer">
+            <option value="" disabled selected>Select User Type</option>
+            <option value="true">Player</option>
+            <option value="false">Dungeon Master</option>
+        </select>
+    </article>
+    
+    <button type="submit">Create</button>
+
+    </form>

@@ -1,11 +1,11 @@
-<div *ngFor="let char of character" class="attack-sheet">
+<div class="attack-sheet">
 
 
     <section class="top-row">
         <section class="top-left-box">
-            <img [src]="char.image" alt="image of {{ char.name }}" />
+            <img [src]="character.image" alt="image of {{ character.name }}" />
 
-                <h2>{{char.name}}</h2>
+                <h2>{{character.name}}</h2>
  
         </section>
 
@@ -21,21 +21,21 @@
                     <!-- Stack two rows of misc info on top of each other -->
                     <div class="title-row">
                         <p class="title"><span class="title-name">Class</span><span
-                                class="title-value">{{char.class}}</span></p>
+                                class="title-value">{{character.class}}</span></p>
                         <p class="title"><span class="title-name">Background</span><span
-                                class="title-value">{{char.background}}</span></p>
+                                class="title-value">{{character.background}}</span></p>
                     </div>
                     <div class="title-row">
                         <p class="title"><span class="title-name">Race</span><span
-                                class="title-value">{{char.race}}</span></p>
+                                class="title-value">{{character.race}}</span></p>
                         <p class="title"><span class="title-name">Alignment</span><span
-                                class="title-value">{{char.alignment}}</span></p>
+                                class="title-value">{{character.alignment}}</span></p>
                     </div>
 
                 </div>
 
                 <div class="level-row">
-                    <p class="level-item"><span class="level-name">Level</span><span class="level-value">{{char.level}}</span>
+                    <p class="level-item"><span class="level-name">Level</span><span class="level-value">{{character.level}}</span>
                     </p>
                    
                 </div>
@@ -49,22 +49,22 @@
 
     <section class="stats-box">
         <!-- Access the 'convertToMod' array and display the modifier -->
-        <p class="stat">Str<span class="mod">{{convertToMod[0][0]}}</span><span class="num">{{char.strength}}</span></p>
-        <p class="stat">Dex<span class="mod">{{convertToMod[0][1]}}</span><span class="num">{{char.dexterity}}</span>
+        <p class="stat">Str<span class="mod">{{this.strMod}}</span><span class="num">{{character.strength}}</span></p>
+        <p class="stat">Dex<span class="mod">{{this.dexMod}}</span><span class="num">{{character.dexterity}}</span>
         </p>
-        <p class="stat">Con<span class="mod">{{convertToMod[0][2]}}</span><span class="num">{{char.constitution}}</span>
+        <p class="stat">Con<span class="mod">{{this.conMod}}</span><span class="num">{{character.constitution}}</span>
         </p>
-        <p class="stat">Int<span class="mod">{{convertToMod[0][3]}}</span><span class="num">{{char.intelligence}}</span>
+        <p class="stat">Int<span class="mod">{{this.intMod}}</span><span class="num">{{character.intelligence}}</span>
         </p>
-        <p class="stat">Wis<span class="mod">{{convertToMod[0][4]}}</span><span class="num">{{char.wisdom}}</span></p>
-        <p class="stat">Ch<span class="mod">{{convertToMod[0][5]}}</span><span class="num">{{char.charisma}}</span></p>
+        <p class="stat">Wis<span class="mod">{{this.wisMod}}</span><span class="num">{{character.wisdom}}</span></p>
+        <p class="stat">Cha<span class="mod">{{this.chaMod}}</span><span class="num">{{character.charisma}}</span></p>
     </section>
 
     <div class="bottom-half" style="display: flex;">
 
         <section class="bottom-left-box" style="width: 10%;">
             <div class="ac-container">
-                <h3 id="ac">AC: {{char.AC}}</h3>
+                <h3 id="ac">AC: {{character.AC}}</h3>
             </div>
 
 
@@ -72,8 +72,8 @@
             <div class="hp-box">
                 <!-- onChange => update HP field via HTTP request -->
                  <label>HP: </label>
-                <input type="number" [defaultValue]="char.maxHp" [max]="char.maxHp" min="0">
-                <p>Max HP: {{char.maxHp}}</p>
+                <input type="number" [defaultValue]="character.maxHp" [max]="character.maxHp" min="0">
+                <p>Max HP: {{character.maxHp}}</p>
             </div>
         </section>
 

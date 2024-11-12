@@ -19,57 +19,36 @@ export class CharacterSheetComponent {
   characterService: CharacterService = inject(CharacterService)
 
   // Create array in which to store the characters returned by the http call
-  character: any[] = []
-
-  // Create an array in which to store the stat modifiers we extract from the character
-  convertToMod: any[] = []
+  character: any
 
   constructor() {
-    
+
   }
 
+  strMod: string | undefined = '';
+  dexMod: string | undefined = '';
+  conMod: string | undefined = '';
+  intMod: string | undefined = '';
+  wisMod: string | undefined = '';
+  chaMod: string | undefined = '';
+
   ngOnInit(): void {
-    // Open up characters returned
-    this.characterService.getCharacters().subscribe(
-      (data: any) => {
-        // Store the characters from data.result in the character array
-        this.character = data.result
-        console.log(data.result)
-        
-        // Function extracting stat mods from character
-        this.convertToMod = this.character.map(char => {
-          const calculateMod = (score: number) => {
-            const modValue = (score - 10) / 2;
-            if (modValue > 0) {
-             this.convertToMod.push(`+${modValue.toString()}`)
-             return `+${modValue.toString()}`
-            } else {
-              this.convertToMod.push(modValue.toString())
-              return modValue.toString()
-            }
-          };
-        
-          return [
-            calculateMod(char.strength),
-            calculateMod(char.dexterity),
-            calculateMod(char.constitution),
-            calculateMod(char.intelligence),
-            calculateMod(char.wisdom),
-            calculateMod(char.charisma)
-          ];
-        });
+    this.characterService.getCharacterWithMods().subscribe({
+      next: (data) => {
+        this.character = data.character;
+        this.strMod = data.mods.strMod;
+        this.dexMod = data.mods.dexMod;
+        this.conMod = data.mods.conMod;
+        this.intMod = data.mods.intMod;
+        this.wisMod = data.mods.wisMod;
+        this.chaMod = data.mods.chaMod;
 
-        console.log(this.convertToMod)
-
-        this.character.forEach(char => {
-          console.log(char)
-        })
+        console.log(this.character);
       },
-    )
-
-   
-
-
+      error: (err) => {
+        console.error('Error fetching character:', err);
+      },
+    });
   }
 
 

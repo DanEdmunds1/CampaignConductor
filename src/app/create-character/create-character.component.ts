@@ -13,6 +13,7 @@ export class CreateCharacterComponent {
 
   postService = inject(PostService)
 
+  // Initialise a varible for the form data to be stored in
   createdCharacter: any = ''
 
 
@@ -37,18 +38,22 @@ export class CreateCharacterComponent {
       AC: new FormControl(0),
       initiative: new FormControl(0),
       maxHp: new FormControl(0),
-      image: new FormControl('')
+      image: new FormControl(''),
+
+      campaignId: new FormControl('')
 
     })
 
+    // Initialise variables to store api responses
     postResponse: any;
     errorMessage: string | undefined;
 
+    // Function that collates all data from the form, uses the post function post service, and logs success or error
+
     createCharacter() {
       this.createdCharacter = this.createCharacterForm.value
-      const content = this.createCharacterForm.value
 
-      const content2 = {
+      const content = {
         AC: this.createCharacterForm.value.AC,
         alignment: this.createCharacterForm.value.alignment,
         background: this.createCharacterForm.value.background,
@@ -65,12 +70,11 @@ export class CreateCharacterComponent {
         race: this.createCharacterForm.value.race,
         strength: this.createCharacterForm.value.strength,
         wisdom: this.createCharacterForm.value.wisdom,
+        campaignId: this.createCharacterForm.value.campaignId,
         _type: 'character'
       }
 
-      console.log(content)
-
-      this.postService.createCharacter(content2).subscribe({
+      this.postService.post(content).subscribe({
         next: (response) => {
           this.postResponse = response;
           console.log('Character created successfully', response)
@@ -82,8 +86,6 @@ export class CreateCharacterComponent {
       })
     }
 
-//post type
-//content
-    
+
 
 }

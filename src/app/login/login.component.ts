@@ -85,7 +85,10 @@ export class LoginComponent {
 
             // Set user id in local storage to be used to render login/sign up or log out
             localStorage.setItem('userId', username._id)
-            this.router.navigateByUrl('/charactersheet')
+            localStorage.setItem('userType', username.isPlayer)
+            localStorage.setItem('campaignId', username.campaignId)
+            this.router.navigateByUrl('/home')
+            this.userService.getUserInfo()
         } else if (username) {
             console.log("User exists but incorrect password");
         } else if (password) {

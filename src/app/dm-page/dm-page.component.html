@@ -1,0 +1,80 @@
+<p>dm-page works!</p>
+
+<div *ngFor="let creature of creatures" class="dm-view">
+    <p>{{creature.name}}</p>
+    <p>AC: {{creature.ac}}</p>
+    <p>Max HP: {{creature.hp}}</p>
+    <p>Strength: {{creature.strength}}</p>
+    <p>Dexterity: {{creature.dexterity}}</p>
+    <p>Constitution: {{creature.constitution}}</p>
+    <p>Intelligence: {{creature.intelligence}}</p>
+    <p>Wisdom: {{creature.wisdom}}</p>
+    <p>Charisma: {{creature.charisma}}</p>
+</div>
+
+
+<form [formGroup]="attackForm" (submit)="getAtkInfo()">
+    <div class="atk-form">
+
+        <article class="form-item">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" placeholder="Attack name" />
+        </article>
+
+        <article class="form-item">
+            <label for="name">Atk Modifier</label>
+            <input type="number" formControlName="atkMod" placeholder="Attack Modifier" />
+        </article>
+
+        <article class="form-item">
+            <label for="class">Dmg Dice</label>
+            <select formControlName="dmgDice">
+                <option value="" disabled selected>Select Dmg Dice</option>
+                <option value="1d4">1d4</option>
+                <option value="1d6">1d6</option>
+                <option value="1d8">1d8</option>
+                <option value="1d10">1d10</option>
+                <option value="1d12">1d12</option>
+                <option value="2d6">2d6</option>
+                <option value="2d8">2d8</option>
+                <option value="3d6">3d6</option>
+                <option value="3d8">3d8</option>
+                <option value="4d6">4d6</option>
+                <option value="5d6">5d6</option>
+                <option value="5d8">5d8</option>
+                <option value="8d6">8d6</option>         
+            </select>
+        </article>
+
+        <article class="form-item">
+            <label for="class">Dmg Type</label>
+            <select formControlName="dmgType">
+                <option value="" disabled selected>Select Dmg Type</option>
+                <option value="acid">Acid</option>
+                <option value="bludgeoning">Bludgeoning</option>
+                <option value="cold">Cold</option>
+                <option value="fire">Fire</option>
+                <option value="force">Force</option>
+                <option value="lightning">Lightning</option>
+                <option value="necrotic">Necrotic</option>
+                <option value="piercing">Piercing</option>
+                <option value="poison">Poison</option>
+                <option value="psychic">Psychic</option>
+                <option value="radiant">Radiant</option>
+                <option value="slashing">Slashing</option>
+                <option value="thunder">Thunder</option>        
+            </select>
+        </article>
+
+        <article class="form-item">
+            <label for="class">Target</label>
+            <select formControlName="target">
+                <option value="" disabled selected>Select Target</option>
+                <option *ngFor="let char of characters" value={{char.name}}>{{char.name}}</option>   
+            </select>
+        </article>
+    </div>
+
+<button type="submit">Attack</button>
+
+</form>

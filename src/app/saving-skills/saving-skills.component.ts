@@ -12,26 +12,33 @@ import { CharacterService } from '../character.service';
 export class SavingSkillsComponent {
   // Inject character service to use its http reqs
   characterService: CharacterService = inject(CharacterService)
-
-// Create arrays to store the extracted data
-  skills: any[] = []
-  savingThrows: any[] = []
+  character: any
+  // Create arrays to store the extracted data
+  strMod: string | undefined = '';
+  dexMod: string | undefined = '';
+  conMod: string | undefined = '';
+  intMod: string | undefined = '';
+  wisMod: string | undefined = '';
+  chaMod: string | undefined = '';
 
   // On page load store the data in relevant arrays
   ngOnInit(): void {
-  this.characterService.getSkills().subscribe(
-    (data: any) => {
-      this.skills = data.result
-      console.log(data.result)
-    }
-  )
+    this.characterService.getCharacterWithMods().subscribe({
+      next: (data) => {
+        this.character = data.character;
+        this.strMod = data.mods.strMod;
+        this.dexMod = data.mods.dexMod;
+        this.conMod = data.mods.conMod;
+        this.intMod = data.mods.intMod;
+        this.wisMod = data.mods.wisMod;
+        this.chaMod = data.mods.chaMod;
 
-  this.characterService.getSavingThrows().subscribe(
-    (data: any) => {
-      this.savingThrows = data.result
-      console.log(data.result)
-    }
-  )
-}
+        console.log(this.chaMod);
+      },
+      error: (err) => {
+        console.error('Error fetching character:', err);
+      },
+    });
+  }
 
 }

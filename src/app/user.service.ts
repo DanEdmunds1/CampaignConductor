@@ -17,5 +17,9 @@ export class UserService {
     return this.http.get(this.userUrl)
   }
 
+  getUserInfo() {
+    console.log(localStorage.getItem('userType'))
+  }
+
   constructor() { }
 }

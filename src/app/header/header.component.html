@@ -1,6 +1,17 @@
-<div class="header">
-    <a [routerLink]="['/charactersheet']">Character Sheet</a>
-    <a [routerLink]="['/login']">Login</a>
+<div *ngIf="isPlayer === 'true'" class="header">
     <a [routerLink]="['/home']">Home</a>
-    <a [routerLink]="['/createCharacter']">Create Character</a>
+    <a [routerLink]="['/charactersheet']">Character Sheet</a>
+    <a [routerLink]="['/logout']">Logout</a>
+</div>
+
+<div *ngIf="isPlayer === 'false'" class="header">
+    <a [routerLink]="['/home']">Home</a>
+    <a [routerLink]="['/dm-page']">DM</a>
+    <a [routerLink]="['/logout']">Logout</a>
+</div>
+
+<div *ngIf="isPlayer === 'no-user'" class="header">
+    <a [routerLink]="['/home']">Home</a>
+    <a [routerLink]="['/login']">Login</a>
+    <a [routerLink]="['/signup']">Sign Up</a>
 </div>
