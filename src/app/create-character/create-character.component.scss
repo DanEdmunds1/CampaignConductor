@@ -1,65 +1,105 @@
 @mixin field-style {
-    border: 1px solid black;
+    border: 1px solid #FFD700;
     border-radius: 45px;
     text-align: center;
     height: 30px;
+    // controls width of the inputs relative to the form item parent
+    width: 100%;
 }
 
-.character-form {
+.create-character {
+    background-image: url('https://i.imgur.com/ANnvFQM.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    .form-item {
+    form {
+        // controls how much of the screen the form item should take up
         width: 40%;
-        margin: 10px;
-        display: flex;
-        flex-direction: column;
+        background-color: #FFFFF0;
+        margin: 30px 0 30px 0;
 
-        label {
-            margin-bottom: 5px
-        }
+        .character-form {
 
-        input {
-            @include field-style();
-
-        }
-
-        select {
-            @include field-style();
-
-        }
-
-        .number-field {
-            width: 30px;
-            
-
-        }
-
-        button {
-            width: 10%;
-        }
-    }
-
-    .form-stats-box {
-        display: flex;
-        flex-direction: row;
-
-        .form-item {
+            display: flex;
+            flex-direction: column;
             align-items: center;
 
-            input {
-                width: 30px;
+
+            .form-item {
+
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                label {
+                    margin-bottom: 5px;
+                }
+
+                input {
+                    @include field-style();
+
+                }
+
+                select {
+                    @include field-style();
+
+
+                }
+
+                .number-field {
+                    width: 30px;
+
+
+                }
 
             }
 
-            label {}
-        }
+            .form-stats-box {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
 
+                .form-item {
+                    align-items: center;
+
+                    input {
+                        width: 30px;
+
+                    }
+                }
+
+            }
+
+            button {
+             margin: 10px;
+             border: 2px solid #2F4F4F;
+             color: #2F4F4F;
+             background-color: transparent;
+             padding: 10px;
+
+             &:hover {
+                border: 2px solid #8B0000;
+                color: #8B0000;
+                font-weight: bold;
+             }
+            }
+        }
     }
+
+
+
 }
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }

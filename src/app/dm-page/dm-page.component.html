@@ -1,80 +1,171 @@
-<p>dm-page works!</p>
+<div class="dm-page">
 
-<div *ngFor="let creature of creatures" class="dm-view">
-    <p>{{creature.name}}</p>
-    <p>AC: {{creature.ac}}</p>
-    <p>Max HP: {{creature.hp}}</p>
-    <p>Strength: {{creature.strength}}</p>
-    <p>Dexterity: {{creature.dexterity}}</p>
-    <p>Constitution: {{creature.constitution}}</p>
-    <p>Intelligence: {{creature.intelligence}}</p>
-    <p>Wisdom: {{creature.wisdom}}</p>
-    <p>Charisma: {{creature.charisma}}</p>
-</div>
+    <div *ngFor="let creature of creatures" class="creatures-box">
+
+        <p id="name">{{creature.name}}</p>
+
+        <section class="creature-info">
+            <p>AC: {{creature.ac}}</p>
+            <p>Max HP: {{creature.hp}}</p>
+            <article class="hp">
+                <label>Current HP: </label>
+                <input type="number" [defaultValue]="creature.hp">
+            </article>
+            <p>Str: {{creature.strength}}</p>
+            <p>Dex: {{creature.dexterity}}</p>
+            <p>Con: {{creature.constitution}}</p>
+            <p>Int: {{creature.intelligence}}</p>
+            <p>Wis: {{creature.wisdom}}</p>
+            <p>Cha: {{creature.charisma}}</p>
+
+            <button (click)="deleteCreature(creature._id)">Delete</button>
+
+        </section>
 
 
-<form [formGroup]="attackForm" (submit)="getAtkInfo()">
-    <div class="atk-form">
 
-        <article class="form-item">
-            <label for="name">Name</label>
-            <input type="text" formControlName="name" placeholder="Attack name" />
-        </article>
-
-        <article class="form-item">
-            <label for="name">Atk Modifier</label>
-            <input type="number" formControlName="atkMod" placeholder="Attack Modifier" />
-        </article>
-
-        <article class="form-item">
-            <label for="class">Dmg Dice</label>
-            <select formControlName="dmgDice">
-                <option value="" disabled selected>Select Dmg Dice</option>
-                <option value="1d4">1d4</option>
-                <option value="1d6">1d6</option>
-                <option value="1d8">1d8</option>
-                <option value="1d10">1d10</option>
-                <option value="1d12">1d12</option>
-                <option value="2d6">2d6</option>
-                <option value="2d8">2d8</option>
-                <option value="3d6">3d6</option>
-                <option value="3d8">3d8</option>
-                <option value="4d6">4d6</option>
-                <option value="5d6">5d6</option>
-                <option value="5d8">5d8</option>
-                <option value="8d6">8d6</option>         
-            </select>
-        </article>
-
-        <article class="form-item">
-            <label for="class">Dmg Type</label>
-            <select formControlName="dmgType">
-                <option value="" disabled selected>Select Dmg Type</option>
-                <option value="acid">Acid</option>
-                <option value="bludgeoning">Bludgeoning</option>
-                <option value="cold">Cold</option>
-                <option value="fire">Fire</option>
-                <option value="force">Force</option>
-                <option value="lightning">Lightning</option>
-                <option value="necrotic">Necrotic</option>
-                <option value="piercing">Piercing</option>
-                <option value="poison">Poison</option>
-                <option value="psychic">Psychic</option>
-                <option value="radiant">Radiant</option>
-                <option value="slashing">Slashing</option>
-                <option value="thunder">Thunder</option>        
-            </select>
-        </article>
-
-        <article class="form-item">
-            <label for="class">Target</label>
-            <select formControlName="target">
-                <option value="" disabled selected>Select Target</option>
-                <option *ngFor="let char of characters" value={{char.name}}>{{char.name}}</option>   
-            </select>
-        </article>
     </div>
 
-<button type="submit">Attack</button>
 
-</form>
+    <form [formGroup]="attackForm" (submit)="getAtkInfo()">
+        <div class="atk-form">
+
+            <article class="form-item">
+                <label for="name">Name</label>
+                <input type="text" formControlName="name" placeholder="Attack name" />
+            </article>
+
+            <article class="form-item">
+                <label for="name">Atk Modifier</label>
+                <input type="number" formControlName="atkMod" placeholder="Attack Modifier" />
+            </article>
+
+            <article class="form-item">
+                <label for="class">Dmg Dice</label>
+                <select formControlName="dmgDice">
+                    <option value="" disabled selected>Select Dmg Dice</option>
+                    <option value="1d4">1d4</option>
+                    <option value="1d6">1d6</option>
+                    <option value="1d8">1d8</option>
+                    <option value="1d10">1d10</option>
+                    <option value="1d12">1d12</option>
+                    <option value="2d6">2d6</option>
+                    <option value="2d8">2d8</option>
+                    <option value="3d6">3d6</option>
+                    <option value="3d8">3d8</option>
+                    <option value="4d6">4d6</option>
+                    <option value="5d6">5d6</option>
+                    <option value="5d8">5d8</option>
+                    <option value="8d6">8d6</option>
+                </select>
+            </article>
+
+            <article class="form-item">
+                <label for="class">Dmg Type</label>
+                <select formControlName="dmgType">
+                    <option value="" disabled selected>Select Dmg Type</option>
+                    <option value="acid">Acid</option>
+                    <option value="bludgeoning">Bludgeoning</option>
+                    <option value="cold">Cold</option>
+                    <option value="fire">Fire</option>
+                    <option value="force">Force</option>
+                    <option value="lightning">Lightning</option>
+                    <option value="necrotic">Necrotic</option>
+                    <option value="piercing">Piercing</option>
+                    <option value="poison">Poison</option>
+                    <option value="psychic">Psychic</option>
+                    <option value="radiant">Radiant</option>
+                    <option value="slashing">Slashing</option>
+                    <option value="thunder">Thunder</option>
+                </select>
+            </article>
+
+            <article class="form-item">
+                <label for="class">Target</label>
+                <select formControlName="target">
+                    <option value="" disabled selected>Select Target</option>
+                    <option *ngFor="let char of characters" value={{char.name}}>{{char.name}}</option>
+                </select>
+            </article>
+        </div>
+
+        <button type="submit">Attack</button>
+
+    </form>
+
+    <form [formGroup]="createCreatureForm" (submit)="createCreature()">
+        <div class="creature-form">
+    
+    
+            <article class="form-item">
+                <label for="name">Name</label>
+                <input type="text" formControlName="name" placeholder="Creature name" />
+            </article>
+    
+            <article class="form-item">
+                <label for="ac">Level</label>
+                <input type="number" class="number-field" formControlName="ac" 
+                
+                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                <!-- This removes the default 0 in the inputs when a user clicks on it, and then leaves a 0 their if the user has not inputted a new value -->
+            </article>
+
+            <article class="form-item">
+                <label for="ac">HP</label>
+                <input type="number" class="number-field" formControlName="hp" 
+                
+                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                <!-- This removes the default 0 in the inputs when a user clicks on it, and then leaves a 0 their if the user has not inputted a new value -->
+            </article>          
+    
+            <div class="form-stats-box">
+                <article class="form-item">
+                    <label for="strength">Strength</label>
+                    <input type="number" currentValue=0 class="number-field" formControlName="strength" 
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                </article>
+        
+                <article class="form-item">
+                    <label for="dexterity">Dexterity</label>
+                    <input type="number" class="number-field" formControlName="dexterity"
+    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                </article>
+        
+                <article class="form-item">
+                    <label for="constitution">Constitution</label>
+                    <input type="number" class="number-field" formControlName="constitution" 
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                </article>
+        
+                <article class="form-item">
+                    <label for="intelligence">Intelligence</label>
+                    <input type="number" class="number-field" formControlName="intelligence"
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                </article>
+        
+                <article class="form-item">
+                    <label for="wisdom">Wisdom</label>
+                    <input type="number" class="number-field" formControlName="wisdom"
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                </article>
+        
+                <article class="form-item">
+                    <label for="charisma">Charisma</label>
+                    <input type="number" class="number-field" formControlName="charisma"
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                </article>
+            </div>
+    
+            <button type="submit">Create Creature</button>
+        </div>
+    
+  
+    
+    </form>
+</div>

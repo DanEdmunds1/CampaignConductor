@@ -1,2 +1,10 @@
-<p>Logout works</p>
-<button (click)="logout()">Log Out</button>
+<div class="logout-page">
+    <p>Log Out?</p>
+
+    <section class="buttons">
+        <button (click)="logout()">Yes, Log Out</button>
+        <button [routerLink]="['/home']">No, Remain Logged In</button>
+    </section>
+
+
+</div>

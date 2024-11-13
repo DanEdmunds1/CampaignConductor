@@ -25,6 +25,7 @@ export class SignUpComponent {
     username: new FormControl(''),
     password: new FormControl(''),
     isPlayer: new FormControl(''),
+    campaignId: new FormControl('')
   })
 
   postResponse: any;
@@ -47,6 +48,7 @@ export class SignUpComponent {
       username: this.createUserForm.value.username,
       password: this.createUserForm.value.password,
       isPlayer: isPlayerValue,
+      campaignId: this.createUserForm.value.campaignId,
       _type: 'user'
     }
 

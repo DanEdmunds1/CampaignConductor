@@ -1,173 +1,176 @@
-<form [formGroup]="createCharacterForm" (submit)="createCharacter()">
-    <div class="character-form">
-
-
-        <article class="form-item">
-            <label for="name">Name</label>
-            <input type="text" formControlName="name" placeholder="Enter your name" />
-        </article>
-
-        <article class="form-item">
-            <label for="level">Level</label>
-            <input type="number" class="number-field" formControlName="level" 
+<div class="create-character">
+    <form [formGroup]="createCharacterForm" (submit)="createCharacter()">
+        <div class="character-form">
+    
+    
+            <article class="form-item">
+                <label for="name">Name</label>
+                <input type="text" formControlName="name" placeholder="Enter your name" />
+            </article>
+    
+            <article class="form-item">
+                <label for="level">Level</label>
+                <input type="number" class="number-field" formControlName="level" 
+                
+                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                <!-- This removes the default 0 in the inputs when a user clicks on it, and then leaves a 0 their if the user has not inputted a new value -->
+    
+            </article>
+    
+            <article class="form-item">
+                <label for="class">Class</label>
+                <select formControlName="class">
+                    <option value="" disabled selected>Select Class</option>
+                    <option value="Barbarian">Barbarian</option>
+                    <option value="Bard">Bard</option>
+                    <option value="Cleric">Cleric</option>
+                    <option value="Druid">Druid</option>
+                    <option value="Fighter">Fighter</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Paladin">Paladin</option>
+                    <option value="Ranger">Ranger</option>
+                    <option value="Rogue">Rogue</option>
+                    <option value="Sorcerer">Sorcerer</option>
+                    <option value="Warlock">Warlock</option>
+                    <option value="Wizard">Wizard</option>
+                </select>
+            </article>
             
-            onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
-            <!-- This removes the default 0 in the inputs when a user clicks on it, and then leaves a 0 their if the user has not inputted a new value -->
-
-        </article>
-
-        <article class="form-item">
-            <label for="class">Class</label>
-            <select formControlName="class">
-                <option value="" disabled selected>Select Class</option>
-                <option value="Barbarian">Barbarian</option>
-                <option value="Bard">Bard</option>
-                <option value="Cleric">Cleric</option>
-                <option value="Druid">Druid</option>
-                <option value="Fighter">Fighter</option>
-                <option value="Monk">Monk</option>
-                <option value="Paladin">Paladin</option>
-                <option value="Ranger">Ranger</option>
-                <option value="Rogue">Rogue</option>
-                <option value="Sorcerer">Sorcerer</option>
-                <option value="Warlock">Warlock</option>
-                <option value="Wizard">Wizard</option>
-            </select>
-        </article>
-        
-        <article class="form-item">
-            <label for="background">Background</label>
-            <select formControlName="background">
-                <option value="" disabled selected>Select Background</option>
-                <option value="Acolyte">Acolyte</option>
-                <option value="Charlatan">Charlatan</option>
-                <option value="Criminal">Criminal</option>
-                <option value="Entertainer">Entertainer</option>
-                <option value="Folk Hero">Folk Hero</option>
-                <option value="Guild Artisan">Guild Artisan</option>
-                <option value="Hermit">Hermit</option>
-                <option value="Noble">Noble</option>
-                <option value="Outlander">Outlander</option>
-                <option value="Sage">Sage</option>
-                <option value="Sailor">Sailor</option>
-                <option value="Soldier">Soldier</option>
-                <option value="Urchin">Urchin</option>
-            </select>
-        </article>
-        
-        <article class="form-item">
-            <label for="race">Race</label>
-            <select formControlName="race">
-                <option value="" disabled selected>Select Race</option>
-                <option value="Human">Human</option>
-                <option value="Elf">Elf</option>
-                <option value="Dwarf">Dwarf</option>
-                <option value="Halfling">Halfling</option>
-                <option value="Dragonborn">Dragonborn</option>
-                <option value="Gnome">Gnome</option>
-                <option value="Half Elf">Half-Elf</option>
-                <option value="Half Orc">Half-Orc</option>
-                <option value="Tiefling">Tiefling</option>
-            </select>
-        </article>
-        
-        <article class="form-item">
-            <label for="alignment">Alignment</label>
-            <select formControlName="alignment">
-                <option value="" disabled selected>Select Alignment</option>
-                <option value="Lawful Good">Lawful Good</option>
-                <option value="Neutral Good">Neutral Good</option>
-                <option value="Chaotic Good">Chaotic Good</option>
-                <option value="Lawful Neutral">Lawful Neutral</option>
-                <option value="True Neutral">True Neutral</option>
-                <option value="Chaotic Neutral">Chaotic Neutral</option>
-                <option value="Lawful Evil">Lawful Evil</option>
-                <option value="Neutral Evil">Neutral Evil</option>
-                <option value="Chaotic Evil">Chaotic Evil</option>
-            </select>
-        </article>
-        
-
-        <div class="form-stats-box">
             <article class="form-item">
-                <label for="strength">Strength</label>
-                <input type="number" currentValue=0 class="number-field" formControlName="strength" 
-                
-                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                <label for="background">Background</label>
+                <select formControlName="background">
+                    <option value="" disabled selected>Select Background</option>
+                    <option value="Acolyte">Acolyte</option>
+                    <option value="Charlatan">Charlatan</option>
+                    <option value="Criminal">Criminal</option>
+                    <option value="Entertainer">Entertainer</option>
+                    <option value="Folk Hero">Folk Hero</option>
+                    <option value="Guild Artisan">Guild Artisan</option>
+                    <option value="Hermit">Hermit</option>
+                    <option value="Noble">Noble</option>
+                    <option value="Outlander">Outlander</option>
+                    <option value="Sage">Sage</option>
+                    <option value="Sailor">Sailor</option>
+                    <option value="Soldier">Soldier</option>
+                    <option value="Urchin">Urchin</option>
+                </select>
             </article>
+            
+            <article class="form-item">
+                <label for="race">Race</label>
+                <select formControlName="race">
+                    <option value="" disabled selected>Select Race</option>
+                    <option value="Human">Human</option>
+                    <option value="Elf">Elf</option>
+                    <option value="Dwarf">Dwarf</option>
+                    <option value="Halfling">Halfling</option>
+                    <option value="Dragonborn">Dragonborn</option>
+                    <option value="Gnome">Gnome</option>
+                    <option value="Half Elf">Half-Elf</option>
+                    <option value="Half Orc">Half-Orc</option>
+                    <option value="Tiefling">Tiefling</option>
+                </select>
+            </article>
+            
+            <article class="form-item">
+                <label for="alignment">Alignment</label>
+                <select formControlName="alignment">
+                    <option value="" disabled selected>Select Alignment</option>
+                    <option value="Lawful Good">Lawful Good</option>
+                    <option value="Neutral Good">Neutral Good</option>
+                    <option value="Chaotic Good">Chaotic Good</option>
+                    <option value="Lawful Neutral">Lawful Neutral</option>
+                    <option value="True Neutral">True Neutral</option>
+                    <option value="Chaotic Neutral">Chaotic Neutral</option>
+                    <option value="Lawful Evil">Lawful Evil</option>
+                    <option value="Neutral Evil">Neutral Evil</option>
+                    <option value="Chaotic Evil">Chaotic Evil</option>
+                </select>
+            </article>
+            
+    
+            <div class="form-stats-box">
+                <article class="form-item">
+                    <label for="strength">Strength</label>
+                    <input type="number" currentValue=0 class="number-field" formControlName="strength" 
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                </article>
+        
+                <article class="form-item">
+                    <label for="dexterity">Dexterity</label>
+                    <input type="number" class="number-field" formControlName="dexterity"
+    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                </article>
+        
+                <article class="form-item">
+                    <label for="constitution">Constitution</label>
+                    <input type="number" class="number-field" formControlName="constitution" 
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
+                </article>
+        
+                <article class="form-item">
+                    <label for="intelligence">Intelligence</label>
+                    <input type="number" class="number-field" formControlName="intelligence"
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                </article>
+        
+                <article class="form-item">
+                    <label for="wisdom">Wisdom</label>
+                    <input type="number" class="number-field" formControlName="wisdom"
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                </article>
+        
+                <article class="form-item">
+                    <label for="charisma">Charisma</label>
+                    <input type="number" class="number-field" formControlName="charisma"
+                    
+                    onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
+                </article>
+            </div>
+    
+           
     
             <article class="form-item">
-                <label for="dexterity">Dexterity</label>
-                <input type="number" class="number-field" formControlName="dexterity"
-
-                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
-            </article>
-    
-            <article class="form-item">
-                <label for="constitution">Constitution</label>
-                <input type="number" class="number-field" formControlName="constitution" 
-                
-                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;" />
-            </article>
-    
-            <article class="form-item">
-                <label for="intelligence">Intelligence</label>
-                <input type="number" class="number-field" formControlName="intelligence"
+                <label for="AC">Armor Class</label>
+                <input type="number" class="number-field" formControlName="AC" 
                 
                 onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
             </article>
     
             <article class="form-item">
-                <label for="wisdom">Wisdom</label>
-                <input type="number" class="number-field" formControlName="wisdom"
+                <label for="initiative">Initiative</label>
+                <input type="number" class="number-field" formControlName="initiative" 
                 
                 onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
             </article>
     
             <article class="form-item">
-                <label for="charisma">Charisma</label>
-                <input type="number" class="number-field" formControlName="charisma"
-                
+                <label for="maxHp">Max HP</label>
+                <input type="number" class="number-field" formControlName="maxHp" 
+    
                 onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
             </article>
+    
+            <article class="form-item">
+                <label for="image">Image</label>
+                <input type="text" formControlName="image" placeholder="Image URL" />
+            </article>
+    
+            <article class="form-item">
+                <label for="campaignId">Campaign Id</label>
+                <input type="text" formControlName="campaignId" placeholder="Campaign Id" />
+            </article>
+            <button type="submit">Create Character</button>
+    
         </div>
+    
+  
+    
+    </form>
+</div>
 
-       
-
-        <article class="form-item">
-            <label for="AC">Armor Class</label>
-            <input type="number" class="number-field" formControlName="AC" 
-            
-            onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
-        </article>
-
-        <article class="form-item">
-            <label for="initiative">Initiative</label>
-            <input type="number" class="number-field" formControlName="initiative" 
-            
-            onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
-        </article>
-
-        <article class="form-item">
-            <label for="maxHp">Max HP</label>
-            <input type="number" class="number-field" formControlName="maxHp" 
-
-            onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
-        </article>
-
-        <article class="form-item">
-            <label for="image">Image</label>
-            <input type="text" formControlName="image" placeholder="Image URL" />
-        </article>
-
-        <article class="form-item">
-            <label for="campaignId">Campaign Id</label>
-            <input type="text" formControlName="campaignId" placeholder="Campaign Id" />
-        </article>
-
-
-    </div>
-
-<button type="submit">Create Character</button>
-
-</form>

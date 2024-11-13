@@ -24,9 +24,7 @@ export class PostService {
     const postData = {
       mutations: [
         {
-          create: 
-            content
-          
+          create: content
         }
       ]
     }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
+import { UserTypeService } from '../user-type.service';
+
+
 
 
 
@@ -16,19 +18,10 @@ export class HeaderComponent {
 
   isPlayer: string = ''
 
+  constructor(private userTypeService: UserTypeService) {}
+
   ngDoCheck(): void {
-
-    if (!localStorage.getItem('userType')) {
-      this.isPlayer = 'no-user'
-    } else if (localStorage.getItem('userType') === 'true') {
-      this.isPlayer = 'true'
-    } else if (localStorage.getItem('userType') === 'false') {
-      this.isPlayer = 'false'
-    } else {
-      return
-    }
-
-
+    this.isPlayer = this.userTypeService.getUserType();
   }
 
 }

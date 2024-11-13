@@ -1,0 +1,26 @@
+.logout-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 52vh;
+
+    p {
+        font-family: "Faculty Glyphic";
+        font-size: 40px;
+    }
+
+    .buttons {
+        width: 50%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        button {
+            margin: 0 10px 0 10px;
+            width: 30%;
+            font-family: "Faculty Glyphic";
+        }
+
+        
+    }
+}

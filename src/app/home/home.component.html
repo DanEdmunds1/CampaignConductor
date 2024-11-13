@@ -1,8 +1,11 @@
 <div class="home">
 
     <section class="hero">
-        
         <p class="title">Campaign Conductor</p>
+
+        <a *ngIf="isPlayer === 'true'" [routerLink]="['/charactersheet']">Character Sheet</a>
+        <a *ngIf="isPlayer === 'false'" [routerLink]="['/dm-page']">DM View</a>
+        <a *ngIf="isPlayer === 'no-user'" [routerLink]="['/login']">Login</a>
     
     </section>
 

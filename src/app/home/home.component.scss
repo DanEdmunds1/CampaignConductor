@@ -5,10 +5,11 @@
         width: 100%;
         min-height: 92vh;
         background-image: url("https://i.imgur.com/ypKRSub.jpeg");
-        background-position: center; 
+        background-position: center;
         background-repeat: no-repeat;
-        background-size: cover; 
+        background-size: cover;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
@@ -17,6 +18,31 @@
             font-size: 80px;
             font-family: "Faculty Glyphic";
             text-decoration: underline;
+
+            transition: color 1s ease-in-out, transform 1s ease-in-out;
+
+            &:hover {
+                color: #FFD700;
+                transform: scale(1.03);
+            }
+
+        }
+
+        a {
+            color: #FFFFF0;
+            text-decoration: none;
+            font-family: "Faculty Glyphic";
+            font-size: 30px;
+            border: 2px solid #FFFFF0;
+            border-radius: 10px;
+            padding: 10px;
+
+            &:hover {
+                // transform: scale(1.1);
+                background-color: #FFFFF0;
+                color: #2f4f4f;
+                border: 2px solid #2f4f4f ;
+            }
         }
     }
 }

@@ -21,5 +21,10 @@ export class UserService {
     console.log(localStorage.getItem('userType'))
   }
 
+  
+
   constructor() { }
+
+
+
 }

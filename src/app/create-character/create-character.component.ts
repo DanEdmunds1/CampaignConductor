@@ -16,7 +16,6 @@ export class CreateCharacterComponent {
   // Initialise a varible for the form data to be stored in
   createdCharacter: any = ''
 
-
     // Create the form object
     createCharacterForm = new FormGroup({
       name: new FormControl(''),
@@ -51,6 +50,7 @@ export class CreateCharacterComponent {
     // Function that collates all data from the form, uses the post function post service, and logs success or error
 
     createCharacter() {
+      // store form values in createdCharacter variable
       this.createdCharacter = this.createCharacterForm.value
 
       const content = {
