@@ -72,8 +72,7 @@
 
             <div class="hp-box">
                 <!-- onChange => update HP field via HTTP request -->
-                <label>HP: </label>
-                <input type="number" [defaultValue]="character.maxHp" [max]="character.maxHp" min="0">
+                <p>HP: {{character.hp}}</p>
                 <p>Max HP: {{character.maxHp}}</p>
             </div>
         </section>

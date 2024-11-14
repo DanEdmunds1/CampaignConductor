@@ -8,6 +8,7 @@ export class DmService {
 
   creatureUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "creature"]'
 
+
   deleteUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'
 
   createUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'
@@ -44,24 +45,31 @@ export class DmService {
     return this.http.post(this.deleteUrl, postData, { headers })
   }
 
-  // createCreature(content: any) {
-  //   console.log(content)
+  updateHp(idString: string, value: any) {
+    console.log(idString)
+    console.log(value)
 
-  //   const postData = {
-  //     mutations: [
-  //       {
-  //         create: content
-  //       }
-  //     ]
-  //   }
-
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${this.token}`
-  //   })
-
-  //   return this.http.post(this.createUrl, postData, { headers })
-  // }
-
+        // Format the request
+        const postData = {
+          mutations: [
+            {
+              patch: 
+              {
+                id: idString,
+                set: {
+                  hp: value
+                }
+              }
+              
+            }
+          ]
+        }
+        console.log(postData)
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        })
+        return this.http.post(this.createUrl, postData, { headers })
+  }
 
 }

@@ -6,6 +6,7 @@ import { PostService } from '../post.service';
 // allows us to use *ngFor
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { parse } from 'node:path';
 
 
 @Component({
@@ -72,6 +73,9 @@ export class DmPageComponent {
     )
   }
 
+  //* CHARACTERS DISPLAY
+
+
 
 
   //* ATTACK FORM
@@ -95,6 +99,41 @@ export class DmPageComponent {
 
   }
 
+  // generate a random integer between min and max inclusive
+  getRandomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
+
+  // parse dice roll string and generate damage
+  rollDmg(dice: string): number {
+
+    // Regex to match dice format
+    const regex = /^(\d+)d(\d+)$/;
+    const match = dice.match(regex)
+
+    if (match) {
+      // parse string to number via regex expression, 10 specifies radix in which number is represented
+      const diceNum = parseInt(match[1], 10)
+      const sidesNum = parseInt(match[2], 10)
+
+      let total = 0
+
+      // roll each dice
+      for (let i = 0; i < diceNum; i++) {
+        total += this.getRandomInt(1, sidesNum)
+      }
+      console.log('TOTAL')
+      console.log(total)
+
+      return total
+    } else {
+      throw new Error('invalid dice notation')
+    }
+  }
+
+  atkResponse: any;
+  atkErrorMessage: string | undefined;
+
   rollAttack(atk: any) {
     const hit = Math.floor(Math.random() * 20) + 1
 
@@ -105,7 +144,24 @@ export class DmPageComponent {
       console.log(target)
       console.log(hit)
       if (hit + atk.atkMod >= target.AC) {
+
+        let currentHp = target.hp
+
+        const newHp = currentHp -= this.rollDmg(atk.dmgDice)
+
         console.log('hit')
+
+        this.dmService.updateHp(target._id, newHp).subscribe({
+          next: (response) => {
+            this.atkResponse = response;
+            console.log('Attack successful', response)
+          },
+          error: (err) => {
+            this.atkErrorMessage = `Error: ${err.message}`;
+            console.error('Error attacking', err)
+          }
+        })
+
       } else {
         console.log('miss')
       }
