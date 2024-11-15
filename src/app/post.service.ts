@@ -14,6 +14,7 @@ export class PostService {
   // API end point for any post methods
   createUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'
 
+
   // Created in sanity, required for post methods
   token = 'sk1BdZuFL2Nn5b1aodFXyUVQVxDBS87jrwNarY5gcDDSiP8LHWL4pA2D52AddbEhafvRPMzNe0IPBXDgreZdtBvg4we46A3qxJ28MnCG45Lslh6xJZPfjT9lVU3xpgdsl3TG68hcAMtaWZZN83gvr6363BfN4S32Z07Ztj0DHnq3hGAGowfK'
 
@@ -47,5 +48,6 @@ export class PostService {
   createSavingThrows(savingThrows: any) {
     return this.http.post(this.createUrl, savingThrows)
   }
+
 
 }

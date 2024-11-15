@@ -8,7 +8,6 @@ export class DmService {
 
   creatureUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "creature"]'
 
-
   deleteUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'
 
   createUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'

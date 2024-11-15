@@ -3,7 +3,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 90vh;
+    height: 92vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@
             font-family: "Faculty Glyphic";
             color: #FFFFF0;
             font-size: 50px;
-            
+            margin-right: 50px;
         }
 
         form {
@@ -44,15 +44,14 @@
                     font-size: 30px;
                 }
             }
+        }
 
             button {
                 padding: 5px 20px 5px 20px;
-                margin-bottom: 20px;
                 border-radius: 20px;
+                text-align: center;
+                margin: 0 0 0 50px;
             }
-
-        }
-
 
     }
 }

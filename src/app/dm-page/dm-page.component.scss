@@ -98,6 +98,9 @@
                     .stats {
                         display: flex;
                         flex-wrap: wrap;
+                        p {
+                            text-decoration: none;
+                        }
                     }
                 }
             }

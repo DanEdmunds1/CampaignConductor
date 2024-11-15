@@ -6,7 +6,6 @@ import { PostService } from '../post.service';
 // allows us to use *ngFor
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { parse } from 'node:path';
 
 
 @Component({
@@ -31,9 +30,7 @@ export class DmPageComponent {
   characters: any[] = []
 
 
-
-
-  ngOnInit(): void {
+  loadCreatures() {
     // Open up creatures returned
     this.dmService.getCreatures().subscribe(
       (data: any) => {
@@ -52,7 +49,9 @@ export class DmPageComponent {
         console.log(relevantCreatures)
       },
     )
+  }
 
+  loadCharacters() {
     // Open up characters returned
     this.characterService.getCharacters().subscribe(
       (data: any) => {
@@ -68,9 +67,19 @@ export class DmPageComponent {
         })
         // Store the creatures from data.result in the creatures array
         this.characters = relevantCharacters
+
         console.log(relevantCharacters)
+        console.log('characters loaded')
       },
     )
+  }
+
+
+  ngOnInit(): void {
+
+    this.loadCreatures()
+    this.loadCharacters()
+
   }
 
   //* CHARACTERS DISPLAY
@@ -162,6 +171,16 @@ export class DmPageComponent {
           }
         })
 
+        // reset form
+        this.attackForm.reset()
+
+        //TODO: Replace http requests with async function to avoid having to do this
+        //* Angular is faster than the http requests, so we nee dot wait for the cms values to be updated before rendering the new hp value
+        setTimeout(() => {
+          this.loadCharacters()
+        }, 500)
+        
+
       } else {
         console.log('miss')
       }
@@ -217,9 +236,6 @@ export class DmPageComponent {
       _type: 'creature'
     }
 
-    // update creatures rendered
-    this.creatures.push(content)
-
     this.postService.post(content).subscribe({
       next: (response) => {
         this.postResponse = response;
@@ -230,6 +246,13 @@ export class DmPageComponent {
         console.error('Error creating character', err)
       }
     })
+
+    // reset form
+    this.createCreatureForm.reset()
+
+    setTimeout(() => {
+      this.loadCreatures()
+    }, 2000)
 
   }
 
@@ -255,10 +278,11 @@ export class DmPageComponent {
       }
     })
 
+    setTimeout(() => {
+      this.loadCreatures()
+    }, 2000)
+
   }
-
-
-
 
   constructor() { }
 
