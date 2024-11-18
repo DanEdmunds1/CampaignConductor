@@ -15,6 +15,7 @@ export class HomeComponent {
   isPlayer: string = ''
 
   constructor(private userTypeService: UserTypeService) {}
+  
 
   ngDoCheck(): void {
     this.isPlayer = this.userTypeService.getUserType();

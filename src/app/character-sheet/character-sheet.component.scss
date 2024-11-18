@@ -1,6 +1,6 @@
 $left-box-margin: 40px;
 
-.attack-sheet {
+.character-sheet {
     width: 100%;
 
     .top-row {
@@ -22,13 +22,13 @@ $left-box-margin: 40px;
             }
 
 
-                h2 {
-                    padding: 10px;
-                    align-self: center;
-                    margin-right: $left-box-margin;
-                    font-size: 40px;
-                }
-            
+            h2 {
+                padding: 10px;
+                align-self: center;
+                margin-right: $left-box-margin;
+                font-size: 40px;
+            }
+
 
 
         }
@@ -109,7 +109,7 @@ $left-box-margin: 40px;
         justify-content: center;
         width: 100%;
         border: 1px solid #FFD700;
-        
+
 
         .stat {
             display: flex;
@@ -127,7 +127,7 @@ $left-box-margin: 40px;
 
 
         .bottom-left-box {
-            
+
             margin: 20px;
 
             .ac-container {
@@ -145,4 +145,76 @@ $left-box-margin: 40px;
         }
 
     }
+
+    .creatures-section {
+        border: 1px solid #FFD700;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+
+        #title {
+            text-decoration: underline;
+            font-size: 25px;
+        }
+
+        .creatures-box {
+            display: flex;
+            flex-wrap: wrap;
+
+            .creature {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                border: 1px solid black;
+                margin: 30px;
+
+                width: 250px;
+                height: 250px;
+
+                .creature-top {
+                    font-weight: bold;
+                    height: 70%;
+                    background-color: #FFD700;
+                    width: 100%;
+                    margin: 0;
+                    padding-top: 40px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    .important-stats {
+                        display: flex;
+                        width: 100%;
+                        justify-content: space-evenly;
+                    }
+                }
+
+                .creature-info {
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    height: 30%;
+                    padding-top: 15px;
+
+                    p {
+                        margin: 0 20px 0 0;
+                    }
+
+
+                }
+            }
+        }
+
+    }
+
+
+}
+
+.selected {
+    border: 2px solid red !important;
 }

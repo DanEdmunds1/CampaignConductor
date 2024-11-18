@@ -1,4 +1,4 @@
-<div class="attack-sheet">
+<div class="character-sheet">
 
 
     <section class="top-row">
@@ -68,8 +68,6 @@
                 <h3 id="ac">AC: {{character.AC}}</h3>
             </div>
 
-
-
             <div class="hp-box">
                 <!-- onChange => update HP field via HTTP request -->
                 <p>HP: {{character.hp}}</p>
@@ -77,13 +75,37 @@
             </div>
         </section>
 
-
         <app-weapons-spellcasting style="width: 65%;"></app-weapons-spellcasting>
 
         <app-saving-skills style="width: 25%;"></app-saving-skills>
 
     </div>
 
+    <div class="creatures-section">
+        <p id="title">HOSTILE CREATURES</p>
+        <section class="creatures-box">
+            <div *ngFor="let creature of creatures" class="creature" id="{{creature.name}}"  [class.selected]="creature === selectedCreature" (click)="handleSelect(creature, creature.name)">
+                <section class="creature-top">
+                    <p id="name">{{creature.name}}</p>
+                    <div class="important-stats">
+                        <p>AC: {{creature.ac}}</p>
+                        <p>HP: {{creature.hp}}</p>
+                    </div>
+                </section>
 
+                <section class="creature-info">
+                    <p>Str: {{creature.strength}}</p>
+                    <p>Dex: {{creature.dexterity}}</p>
+                    <p>Con: {{creature.constitution}}</p>
+                    <p>Int: {{creature.intelligence}}</p>
+                    <p>Wis: {{creature.wisdom}}</p>
+                    <p>Cha: {{creature.charisma}}</p>
+                </section>
+
+            </div>
+
+        </section>
+
+    </div>
 
 </div>

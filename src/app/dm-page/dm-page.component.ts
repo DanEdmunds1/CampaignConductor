@@ -6,6 +6,7 @@ import { PostService } from '../post.service';
 // allows us to use *ngFor
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import e from 'express';
 
 
 @Component({
@@ -100,11 +101,74 @@ export class DmPageComponent {
     target: new FormControl('')
   })
 
+  isValid: boolean = true; // Initially valid, no 'invalid' class
+
+  atkModelChange() {
+    this.checkFields(this.attackForm.value, 'atk')
+  }
+
+  creatureModelChange() {
+    this.checkFields(this.createCreatureForm.value, 'creature')
+  }
+
+  constructor() { }
+
+
+
+  checkFields(form: any, prefix: string) {
+    const formGiven = form
+    const prefixGiven = prefix
+
+    const elements = document.querySelectorAll('*')
+    const elementsArray = Array.from(elements)
+
+
+
+    for (const [key, value] of Object.entries(formGiven)) {
+
+      const element = document.getElementById(`${prefixGiven}-${key}`)
+
+      if (value === "" || value === 0 || value === null) {
+        element?.classList.add(`${prefixGiven}-invalid`)
+
+      } else {
+        element?.classList.remove(`${prefixGiven}-invalid`)
+      }
+    }
+
+    // // Check if any element contains the specified class
+    // for (let element of elementsArray) {
+    //   if (element.classList.contains(`${prefixGiven}-invalid`)) {
+    //     console.log('class spotted')
+    //     return false; // Return false as soon as one element has the class
+    //   }
+    // }
+
+    // console.log('no class sighted')
+    // return 'isValid'
+  }
+
+
   // Function that collates all data from the form
   getAtkInfo() {
     this.attack = this.attackForm.value
-    console.log(this.attack)
-    this.rollAttack(this.attack)
+    this.atkModelChange()
+
+    const allFieldsFilled = Object.values(this.attack).every(value => value !== null && value !== undefined && value !== '');
+
+    if (allFieldsFilled) {
+      console.log(this.attack)
+      this.rollAttack(this.attack)
+      // reset form
+      this.attackForm.reset({
+        atkMod: 0,
+        dmgDice: 'Select Dmg Dice',
+        dmgType: 'Select Dmg Type',
+        target: 'Select Target'
+      })
+    } else {
+      console.log('attack fields missing')
+    }
 
   }
 
@@ -140,6 +204,7 @@ export class DmPageComponent {
     }
   }
 
+
   atkResponse: any;
   atkErrorMessage: string | undefined;
 
@@ -171,22 +236,22 @@ export class DmPageComponent {
           }
         })
 
-        // reset form
-        this.attackForm.reset()
+
 
         //TODO: Replace http requests with async function to avoid having to do this
         //* Angular is faster than the http requests, so we nee dot wait for the cms values to be updated before rendering the new hp value
         setTimeout(() => {
           this.loadCharacters()
-        }, 500)
-        
+        }, 2000)
+
 
       } else {
         console.log('miss')
       }
 
+
     } else {
-      console.log('no')
+      console.log('no target')
     }
 
 
@@ -218,9 +283,10 @@ export class DmPageComponent {
   postResponse: any;
   createErrorMessage: string | undefined;
 
+
   createCreature() {
 
-    this.createdCreature = this.createCreatureForm.value
+    this.creatureModelChange()
 
     const content = {
       name: this.createCreatureForm.value.name,
@@ -236,19 +302,34 @@ export class DmPageComponent {
       _type: 'creature'
     }
 
-    this.postService.post(content).subscribe({
-      next: (response) => {
-        this.postResponse = response;
-        console.log('Character created successfully', response)
-      },
-      error: (err) => {
-        this.createErrorMessage = `Error: ${err.message}`;
-        console.error('Error creating character', err)
-      }
-    })
+    // Check if all fields have non-empty values
+    const allFieldsFilled = Object.values(content).every(value => value !== null && value !== undefined && value !== '');
 
-    // reset form
-    this.createCreatureForm.reset()
+    if (allFieldsFilled) {
+      this.postService.post(content).subscribe({
+        next: (response) => {
+          this.postResponse = response;
+          console.log('Character created successfully', response)
+        },
+        error: (err) => {
+          this.createErrorMessage = `Error: ${err.message}`;
+          console.error('Error creating character', err)
+        }
+      })
+      // reset form
+      this.createCreatureForm.reset({
+        ac: 0,
+        hp: 0,
+        strength: 0,
+        dexterity: 0,
+        constitution: 0,
+        intelligence: 0,
+        wisdom: 0,
+        charisma: 0,
+      })
+    } else {
+      console.log('missing creature fields')
+    }
 
     setTimeout(() => {
       this.loadCreatures()
@@ -284,7 +365,7 @@ export class DmPageComponent {
 
   }
 
-  constructor() { }
+
 
 
 }

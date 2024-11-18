@@ -7,11 +7,7 @@
 
         <section class="creature-info">
             <p>AC: {{creature.ac}}</p>
-            <p>Max HP: {{creature.hp}}</p>
-            <article class="hp">
-                <label>Current HP: </label>
-                <input type="number" [defaultValue]="creature.hp">
-            </article>
+            <p>HP: {{creature.hp}}</p>
             <p>Str: {{creature.strength}}</p>
             <p>Dex: {{creature.dexterity}}</p>
             <p>Con: {{creature.constitution}}</p>
@@ -48,75 +44,71 @@
     </section>
 
     <div class="atk-create">
-        <form [formGroup]="attackForm" (submit)="getAtkInfo()" class="atk-form">
+        <form [formGroup]="attackForm" (submit)="getAtkInfo()" id="atk-form">
 
             <p class="form-title">Attack</p>
             <article class="form-item">
                 <label for="name">Attack Name</label>
-                <input type="text" formControlName="name" placeholder="Attack name" />
+                <input type="text" formControlName="name" placeholder="Attack name" id="atk-name" (ngModelChange)=atkModelChange()  />
             </article>
 
             <article class="form-item" id="atkMod">
                 <label for="name">Atk Modifier</label>
-                <input type="number" formControlName="atkMod" placeholder="Attack Modifier" />
+                <input type="number" formControlName="atkMod" id="atk-atkMod" (ngModelChange)=atkModelChange() 
+                onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
             </article>
 
             <div class="dmg-box">
-                           <article class="form-item">
-                <label for="class">Dmg Dice</label>
-                <select formControlName="dmgDice">
-                    <option value="" disabled selected>Select Dmg Dice</option>
-                    <option value="1d4">1d4</option>
-                    <option value="1d6">1d6</option>
-                    <option value="1d8">1d8</option>
-                    <option value="1d10">1d10</option>
-                    <option value="1d12">1d12</option>
-                    <option value="2d6">2d6</option>
-                    <option value="2d8">2d8</option>
-                    <option value="3d6">3d6</option>
-                    <option value="3d8">3d8</option>
-                    <option value="4d6">4d6</option>
-                    <option value="5d6">5d6</option>
-                    <option value="5d8">5d8</option>
-                    <option value="8d6">8d6</option>
-                </select>
-            </article>
+                <article class="form-item">
+                    <label for="class">Dmg Dice</label>
+                    <select formControlName="dmgDice" id="atk-dmgDice" (ngModelChange)=atkModelChange() >
+                        <option value="" disabled selected>Select Dmg Dice</option>
+                        <option value="1d4">1d4</option>
+                        <option value="1d6">1d6</option>
+                        <option value="1d8">1d8</option>
+                        <option value="1d10">1d10</option>
+                        <option value="1d12">1d12</option>
+                        <option value="2d6">2d6</option>
+                        <option value="2d8">2d8</option>
+                        <option value="3d6">3d6</option>
+                        <option value="3d8">3d8</option>
+                        <option value="4d6">4d6</option>
+                        <option value="5d6">5d6</option>
+                        <option value="5d8">5d8</option>
+                        <option value="8d6">8d6</option>
+                    </select>
+                </article>
 
-            <article class="form-item">
-                <label for="class">Dmg Type</label>
-                <select formControlName="dmgType">
-                    <option value="" disabled selected>Select Dmg Type</option>
-                    <option value="acid">Acid</option>
-                    <option value="bludgeoning">Bludgeoning</option>
-                    <option value="cold">Cold</option>
-                    <option value="fire">Fire</option>
-                    <option value="force">Force</option>
-                    <option value="lightning">Lightning</option>
-                    <option value="necrotic">Necrotic</option>
-                    <option value="piercing">Piercing</option>
-                    <option value="poison">Poison</option>
-                    <option value="psychic">Psychic</option>
-                    <option value="radiant">Radiant</option>
-                    <option value="slashing">Slashing</option>
-                    <option value="thunder">Thunder</option>
-                </select>
-            </article>
+                <article class="form-item">
+                    <label for="class">Dmg Type</label>
+                    <select formControlName="dmgType" id="atk-dmgType" (ngModelChange)=atkModelChange() >
+                        <option value="" disabled selected>Select Dmg Type</option>
+                        <option value="acid">Acid</option>
+                        <option value="bludgeoning">Bludgeoning</option>
+                        <option value="cold">Cold</option>
+                        <option value="fire">Fire</option>
+                        <option value="force">Force</option>
+                        <option value="lightning">Lightning</option>
+                        <option value="necrotic">Necrotic</option>
+                        <option value="piercing">Piercing</option>
+                        <option value="poison">Poison</option>
+                        <option value="psychic">Psychic</option>
+                        <option value="radiant">Radiant</option>
+                        <option value="slashing">Slashing</option>
+                        <option value="thunder">Thunder</option>
+                    </select>
+                </article>
             </div>
-
- 
 
             <article class="form-item">
                 <label for="class">Target</label>
-                <select formControlName="target">
+                <select formControlName="target" id="atk-target" (ngModelChange)=atkModelChange() >
                     <option value="" disabled selected>Select Target</option>
                     <option *ngFor="let char of characters" value={{char.name}}>{{char.name}}</option>
                 </select>
             </article>
 
             <button type="submit">Attack</button>
-
-
-
 
         </form>
 
@@ -125,20 +117,20 @@
             <p class="form-title">Create Creature</p>
             <article class="form-item">
                 <label for="name">Creature</label>
-                <input type="text" formControlName="name" placeholder="Creature name" />
+                <input type="text" formControlName="name" placeholder="Creature name" id="creature-name" (ngModelChange)=creatureModelChange() />
             </article>
 
             <article class="form-item">
                 <label for="ac">AC</label>
-                <input type="number" class="number-field" formControlName="ac"
+                <input type="number" class="number-field" formControlName="ac" id="creature-ac"  (ngModelChange)=creatureModelChange()
                     onfocus="this.value = (this.value === '0') ? '' : this.value;"
                     onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 <!-- This removes the default 0 in the inputs when a user clicks on it, and then leaves a 0 their if the user has not inputted a new value -->
             </article>
 
             <article class="form-item">
-                <label for="ac">HP</label>
-                <input type="number" class="number-field" formControlName="hp"
+                <label for="hp">HP</label>
+                <input type="number" class="number-field" formControlName="hp" id="creature-hp"  (ngModelChange)=creatureModelChange()
                     onfocus="this.value = (this.value === '0') ? '' : this.value;"
                     onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 <!-- This removes the default 0 in the inputs when a user clicks on it, and then leaves a 0 their if the user has not inputted a new value -->
@@ -147,42 +139,42 @@
             <div class="form-stats-box">
                 <article class="form-item">
                     <label for="strength">Strength</label>
-                    <input type="number" currentValue=0 class="number-field" formControlName="strength"
+                    <input type="number" currentValue=0 class="number-field" formControlName="strength" id="creature-strength"  (ngModelChange)=creatureModelChange()
                         onfocus="this.value = (this.value === '0') ? '' : this.value;"
                         onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 </article>
 
                 <article class="form-item">
                     <label for="dexterity">Dexterity</label>
-                    <input type="number" class="number-field" formControlName="dexterity"
+                    <input type="number" class="number-field" formControlName="dexterity" id="creature-dexterity"  (ngModelChange)=creatureModelChange()
                         onfocus="this.value = (this.value === '0') ? '' : this.value;"
                         onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 </article>
 
                 <article class="form-item">
                     <label for="constitution">Constitution</label>
-                    <input type="number" class="number-field" formControlName="constitution"
+                    <input type="number" class="number-field" formControlName="constitution" id="creature-constitution"  (ngModelChange)=creatureModelChange()
                         onfocus="this.value = (this.value === '0') ? '' : this.value;"
                         onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 </article>
 
                 <article class="form-item">
                     <label for="intelligence">Intelligence</label>
-                    <input type="number" class="number-field" formControlName="intelligence"
+                    <input type="number" class="number-field" formControlName="intelligence" id="creature-intelligence"  (ngModelChange)=creatureModelChange()
                         onfocus="this.value = (this.value === '0') ? '' : this.value;"
                         onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 </article>
 
                 <article class="form-item">
                     <label for="wisdom">Wisdom</label>
-                    <input type="number" class="number-field" formControlName="wisdom"
+                    <input type="number" class="number-field" formControlName="wisdom" id="creature-wisdom"  (ngModelChange)=creatureModelChange()
                         onfocus="this.value = (this.value === '0') ? '' : this.value;"
                         onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 </article>
 
                 <article class="form-item">
                     <label for="charisma">Charisma</label>
-                    <input type="number" class="number-field" formControlName="charisma"
+                    <input type="number" class="number-field" formControlName="charisma" id="creature-charisma"  (ngModelChange)=creatureModelChange()
                         onfocus="this.value = (this.value === '0') ? '' : this.value;"
                         onblur="this.value = (this.value === '') ? '0' : this.value;" />
                 </article>

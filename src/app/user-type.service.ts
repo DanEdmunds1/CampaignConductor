@@ -1,21 +1,21 @@
-// user-type.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+// localStorage is not available in server-side rendering context, these imports ensure that any code that accesses localStorage is only executed on the client side
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserTypeService {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  constructor() { }
-
-  // Method to check the user type from localStorage
   getUserType(): string {
-    const userType = localStorage.getItem('userType');
-    
-    if (!userType) {
-      return 'no-user';  // Default when no userType is in localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      // Safely access localStorage here
+      return localStorage.getItem('userType') || 'default';
+    } else {
+      // Handle SSR scenario or return a default value
+      return 'default';
     }
-
-    return userType === 'true' ? 'true' : userType === 'false' ? 'false' : 'no-user';
   }
 }
