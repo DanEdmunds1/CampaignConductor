@@ -104,6 +104,7 @@ $left-box-margin: 40px;
 
     }
 
+
     .stats-box {
         display: flex;
         justify-content: center;
@@ -123,6 +124,7 @@ $left-box-margin: 40px;
         }
     }
 
+    // Underneath stats box
     .bottom-half {
 
 
@@ -142,9 +144,19 @@ $left-box-margin: 40px;
                 justify-content: center;
             }
 
+            .hp-box {
+                #max {
+                    color: gray;
+                }
+            }
+
         }
 
     }
+
+    // Weapons/Spells
+    // Saving Throws / Skills
+    
 
     .creatures-section {
         border: 1px solid #FFD700;
@@ -186,10 +198,15 @@ $left-box-margin: 40px;
                     align-items: center;
                     justify-content: center;
 
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+
                     .important-stats {
                         display: flex;
                         width: 100%;
                         justify-content: space-evenly;
+                        
                     }
                 }
 
@@ -203,6 +220,7 @@ $left-box-margin: 40px;
 
                     p {
                         margin: 0 20px 0 0;
+                        font-weight: bold;
                     }
 
 
@@ -216,5 +234,5 @@ $left-box-margin: 40px;
 }
 
 .selected {
-    border: 2px solid red !important;
+    border: 1px solid red !important;
 }

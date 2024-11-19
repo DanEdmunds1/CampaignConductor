@@ -18,30 +18,33 @@
         <button (click)="deleteCreature(creature._id)">Kill</button>
     </div>
 
-    <section class="characters-box">
-        <div *ngFor="let char of characters" class="characters">
-            <p>{{char.name}}</p>
-            <div class="row">
-
-                <img src="{{char.image}}" />
-
-                <article class="info">
-                    <p>{{char.class}}</p>
-                    <p>AC: {{char.AC}}</p>
-                    <p>HP: {{char.hp}}</p>
-                    <div class="stats">
-                        <p>Str: {{char.strength}}</p>
-                        <p>Dex: {{char.dexterity}}</p>
-                        <p>Con: {{char.constitution}}</p>
-                        <p>Int: {{char.intelligence}}</p>
-                        <p>Wis: {{char.wisdom}}</p>
-                        <p>Cha: {{char.charisma}}</p>
+    <div class="characters-section">
+        <p id="title">CHARACTERS</p>
+        <section class="characters-box">
+            <div *ngFor="let char of characters" class="character">
+                <section class="character-top" style="background-image: url({{char.image}})">
+                    <p id="name">{{char.name}}</p>
+                    <div class="important-stats">
+                        <p>{{char.class}}</p>
+                        <p>AC: {{char.AC}}</p>
+                        <p>HP: {{char.hp}}</p>
                     </div>
+                </section>
 
-                </article>
+                <section class="character-info">
+                    <p>Str: {{char.strength}}</p>
+                    <p>Dex: {{char.dexterity}}</p>
+                    <p>Con: {{char.constitution}}</p>
+                    <p>Int: {{char.intelligence}}</p>
+                    <p>Wis: {{char.wisdom}}</p>
+                    <p>Cha: {{char.charisma}}</p>
+                </section>
+
             </div>
-        </div>
-    </section>
+
+        </section>
+    </div>
+
 
     <div class="atk-create">
         <form [formGroup]="attackForm" (submit)="getAtkInfo()" id="atk-form">

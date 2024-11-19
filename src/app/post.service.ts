@@ -38,6 +38,27 @@ export class PostService {
     return this.http.post(this.createUrl, postData, { headers })
   }
 
+  delete(idString: string) {
+    console.log(idString)
+    // Format the request
+    const postData = {
+      mutations: [
+        {
+          delete: 
+          {
+            id: idString
+          }
+          
+        }
+      ]
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    })
+    return this.http.post(this.createUrl, postData, { headers })
+  }
+
   createUser(user: any) {
     return this.http.post(this.createUrl, user)
   }

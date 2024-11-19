@@ -1,12 +1,17 @@
 <div class="weapons-and-spellcasting">
-    <h4>Weapons & Spellcasting</h4>
+
 
     <section class="weapons-box">
+        <section class="title-box">
+            <h4>Weapons <span (click)="toggleShowWeaponOptions()">⌄</span></h4>
+           
+        </section>
         <article class="headers">
             <p>NAME</p>
             <p>ATK BONUS</p>
             <p>DMG DICE</p>
             <p>DMG TYPE</p>
+            <p *ngIf="showWeaponOptions === true">EDIT</p>
         </article>
 
         <!-- Iterate through all weapons
@@ -14,27 +19,102 @@
             Use class binding to add another class "selected" and listen for  click event
             Click event that toggles a value
         -->
-        <div *ngFor="let weapon of weapons" class="weapon" 
-        [class.selected]="weapon === selectedWeapon" (click)="toggleSelectedWeapon(weapon)">
+        <div *ngFor="let weapon of weapons" class="weapon" [class.selected]="weapon === selectedWeapon"
+            (click)="toggleSelectedWeapon(weapon)">
             <p>{{weapon.name}}</p>
             <!-- If a weapon has an attack bonus, add that to prof bonus, if not, only display prof bonus -->
             <p *ngIf="weapon.atkBonus">(+{{this.profBonus + weapon.atkBonus}})</p>
             <p *ngIf="!weapon.atkBonus">(+{{this.profBonus}})</p>
             <p>{{weapon.dmgDice}}</p>
             <p>{{weapon.dmgType}}</p>
+            <p *ngIf="showWeaponOptions === true" (click)="deleteWeapon(weapon._id)">Delete?</p>
         </div>
     </section>
 
-    <section class="spells-box">
-        <select name="spells" id="spells">
-            <option>Spells</option>
-            <option *ngFor="let spell of spells" value="{{spell.name}}">{{spell.name}} - {{spell.dmgDice}} -
-                {{spell.dmgType}}</option>
-        </select>
+    <form *ngIf="showWeaponOptions === true" [formGroup]="createWeaponForm" (submit)="createWeapon()">
+        <div class="weapon-form">
 
-        <div class="atk-button">
-            <p>Attack</p>
+
+            <article class="form-item">
+                <label for="name">Name</label>
+                <input type="text" formControlName="name" placeholder="Weapon Name" />
+            </article>
+
+            <article class="form-item">
+                <label for="atkBonus">Atk Bonus</label>
+                <input type="number" class="number-field" formControlName="atkBonus" />
+            </article>
+
+            <article class="form-item">
+                <label for="dmgDice">Dmg Dice</label>
+                <select formControlName="dmgDice">
+                    <option value="" disabled selected>Dmg Dice</option>
+                    <option value="1d4">1d4</option>
+                    <option value="1d6">1d6</option>
+                    <option value="1d8">1d8</option>
+                    <option value="1d10">1d10</option>
+                    <option value="1d12">1d12</option>
+                    <option value="2d6">2d6</option>
+                </select>
+            </article>
+
+            <article class="form-item">
+                <label for="dmgType">Dmg Type</label>
+                <select formControlName="dmgType">
+                    <option value="" disabled selected>Dmg Type</option>
+                    <option value="piercing">Piercing</option>
+                    <option value="slasing">Slasing</option>
+                    <option value="bludgeoning">Bludgeoning</option>
+                </select>
+            </article>
+
+            <button type="submit">Create Weapon</button>
+
         </div>
 
+
+
+    </form>
+
+
+
+    <section class="spells-box">
+
+        <section class="title-box">
+            <h4>Spellcasting <span (click)="toggleShowSpellOptions()"> ⌄</span></h4>
+            <div class="stats">
+                <p>Ability: {{calcSpellInfo().ability}}</p>
+                <p>Save DC: {{calcSpellInfo().dc}}</p>
+                <p>Atk Bonus: {{calcSpellInfo().bonus}}</p>
+            </div>
+        </section>
+
+
+        <section class="spell-display" *ngFor="let level of spellLevels">
+            <article [ngClass]="{'spell-level-box-left': level % 2 === 0,
+                'spell-level-box-right': level % 2 !== 0
+            }">
+                <h5 *ngIf="level === 0">CANTRIPS</h5>
+                <h5 *ngIf="level !== 0">{{level}}</h5>
+
+                <div class="spell-info" *ngFor="let spell of charSpells">
+                    <p *ngIf="spell.level === level">{{spell.name}} - {{spell.dmgDice}} - {{spell.dmgType}}</p>
+                </div>
+            </article>
+        </section>
+
+
+        <div class="add-spell" *ngIf="showSpellOptions">
+            <p>Add Spell</p>
+            <select name="spells" id="spells">
+                <option value="" disabled selected>select</option>
+                <option *ngFor="let spell of allSpells" value="{{spell.name}}">{{spell.name}} - {{spell.dmgDice}} -
+                    {{spell.dmgType}} - 
+                    <span *ngIf="spell.level !== 0">lvl {{spell.level}}</span>
+                    <span *ngIf="spell.level === 0">cantrip</span>
+                </option>
+            </select>
+        </div>
+       
     </section>
 </div>

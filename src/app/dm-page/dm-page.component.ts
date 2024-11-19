@@ -345,10 +345,10 @@ export class DmPageComponent {
 
   deleteCreature(id: string) {
 
-    // update creatures rendered
+    // update creatures rendered quicker, while the timeout runs
     this.creatures = this.creatures.filter(creature => creature._id !== id)
 
-    this.dmService.deleteCreature(id).subscribe({
+    this.postService.delete(id).subscribe({
       next: (response) => {
         this.deleteResponse = response;
         console.log('Creature deleted successfully', response)

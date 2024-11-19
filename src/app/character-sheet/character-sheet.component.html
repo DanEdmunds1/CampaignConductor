@@ -61,7 +61,9 @@
         <p class="stat">Cha<span class="mod">{{this.chaMod}}</span><span class="num">{{character.charisma}}</span></p>
     </section>
 
-    <div class="bottom-half" style="display: flex;">
+    <!-- control widths of the 3 elements underneath the stats box -->
+
+    <div class="bottom-half" style="display: flex; justify-content: space-evenly;">
 
         <section class="bottom-left-box" style="width: 10%;">
             <div class="ac-container">
@@ -69,9 +71,8 @@
             </div>
 
             <div class="hp-box">
-                <!-- onChange => update HP field via HTTP request -->
-                <p>HP: {{character.hp}}</p>
-                <p>Max HP: {{character.maxHp}}</p>
+                <p id="max">Max HP: {{character.maxHp}}</p>
+                <p id="hp">HP: {{character.hp}}</p>
             </div>
         </section>
 
@@ -85,21 +86,19 @@
         <p id="title">HOSTILE CREATURES</p>
         <section class="creatures-box">
             <div *ngFor="let creature of creatures" class="creature" id="{{creature.name}}"  [class.selected]="creature === selectedCreature" (click)="handleSelect(creature, creature.name)">
-                <section class="creature-top">
+                <section class="creature-top" *ngIf="!creature.image">
                     <p id="name">{{creature.name}}</p>
-                    <div class="important-stats">
-                        <p>AC: {{creature.ac}}</p>
-                        <p>HP: {{creature.hp}}</p>
-                    </div>
+                    <div class="important-stats"></div>
+                </section>
+                <section class="creature-info" *ngIf="!creature.image"></section>
+
+                <section class="creature-top" *ngIf="creature.image" style="background-image: url({{creature.image}});">
+                    
+                    <div class="important-stats"></div>
                 </section>
 
-                <section class="creature-info">
-                    <p>Str: {{creature.strength}}</p>
-                    <p>Dex: {{creature.dexterity}}</p>
-                    <p>Con: {{creature.constitution}}</p>
-                    <p>Int: {{creature.intelligence}}</p>
-                    <p>Wis: {{creature.wisdom}}</p>
-                    <p>Cha: {{creature.charisma}}</p>
+                <section class="creature-info" *ngIf="creature.image">
+                    <p id="name">{{creature.name}}</p>
                 </section>
 
             </div>

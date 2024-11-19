@@ -3,30 +3,57 @@ $box-shadow-distance: 3px;
 @mixin weapon-layout {
     display: flex;
     flex-wrap: nowrap;
+    justify-content: center;
 }
 
 @mixin layout-items {
     text-align: center;
-    width: 100px;
+    width: 20%;
     margin: 5px;
+}
+
+@mixin spell-alignment {
+
+    width: 80%;
 }
 
 .weapons-and-spellcasting {
 
     border: 1px solid #2F4F4F;
+    border-radius: 5px;
     margin: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 70%;
+    height: 90%;
 
 
-    h4 {
-        margin: 10px 0 15px 0;
-    }
+
+
+
 
     .weapons-box {
-        border: 1px solid brown;
+        width: 90%;
+        margin: 0 0 20px 0;
+
+
+        .title-box {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+
+            h4 {
+                margin: 10px 0 15px 0;
+            }
+            span {
+                &:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                    color: #FFD700;
+                }
+            }
+        }
 
         .headers {
             @include weapon-layout;
@@ -50,36 +77,69 @@ $box-shadow-distance: 3px;
     }
 
     .spells-box {
-        border: 1px solid silver;
+     
         display: flex;
-
-
-        .atk-button {
-
-            background-color: #8B0000;
-            border: 1px solid black;
-            border-radius: 90px;
-            box-shadow: $box-shadow-distance $box-shadow-distance;
-
-            width: 80px;
-            height: 80px;
-
+        flex-direction: column;
+        align-items: center;
+        // border: 1px solid gold;
+        width: 90%;
+        .title-box {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-
-            margin: 10px;
-
-            &:hover {
-                cursor: pointer;
-                box-shadow: none;
-                transform: translate($box-shadow-distance, $box-shadow-distance);
+            width: 100%;
+            h4 {
+                margin: 0;
+            }
+            span {
+                &:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                    color: #FFD700;
+                }
             }
 
-            p {
-                color: white;
+            .stats {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
             }
         }
+
+     
+
+            .spell-display {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+
+                .spell-level-box-left {
+                    align-self: start;
+                    @include spell-alignment();
+                    padding-left: 20px;
+ 
+                }
+
+                .spell-level-box-right {
+                    align-self: end;
+                    @include spell-alignment();
+                    padding-right: 20px;
+
+                    text-align: end;
+
+                }
+
+                h5 {
+                    margin: 0;
+                }
+                p {
+                    margin: 0;
+                }
+
+
+            }
+        
+       
     }
 
 }

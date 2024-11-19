@@ -8,8 +8,6 @@ export class DmService {
 
   creatureUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "creature"]'
 
-  deleteUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'
-
   createUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/mutate/production'
 
   // Created in sanity, required for post methods
@@ -23,27 +21,7 @@ export class DmService {
     return this.http.get(this.creatureUrl)
   }
 
-  deleteCreature(idString: string) {
-    console.log(idString)
-    // Format the request
-    const postData = {
-      mutations: [
-        {
-          delete: 
-          {
-            id: idString
-          }
-          
-        }
-      ]
-    }
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
-    })
-    return this.http.post(this.deleteUrl, postData, { headers })
-  }
-
+ 
   updateHp(idString: string, value: any) {
     console.log(idString)
     console.log(value)

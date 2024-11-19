@@ -32,8 +32,6 @@ export class SavingSkillsComponent {
         this.intMod = data.mods.intMod;
         this.wisMod = data.mods.wisMod;
         this.chaMod = data.mods.chaMod;
-
-        console.log(this.chaMod);
       },
       error: (err) => {
         console.error('Error fetching character:', err);

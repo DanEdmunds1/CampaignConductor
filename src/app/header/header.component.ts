@@ -22,6 +22,7 @@ export class HeaderComponent {
 
   ngDoCheck(): void {
     this.isPlayer = this.userTypeService.getUserType();
+ 
   }
 
 }

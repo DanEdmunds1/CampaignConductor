@@ -12,10 +12,6 @@ export class CharacterService {
 
   characterUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "character"]'
 
-  skillsUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "skills"]'
-
-  savingThrowsUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "savingThrows"]'
-
   weaponsUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "weapon"]'
 
   spellsUrl = 'https://wsaa3peq.api.sanity.io/v2024-10-15/data/query/production?query=*[_type == "spell"]'
@@ -28,30 +24,36 @@ export class CharacterService {
     return this.http.get(this.characterUrl)
   }
 
-  getSkills() {
-    return this.http.get(this.skillsUrl)
-  }
-
-  getSavingThrows() {
-    return this.http.get(this.savingThrowsUrl)
+  getSpells() {
+    return this.http.get(this.spellsUrl)
   }
 
   getWeapons() {
     return this.http.get(this.weaponsUrl)
   }
 
-  getSpells() {
-    return this.http.get(this.spellsUrl)
-  }
+  getWeaponsForChar(): Observable<any> {
+    return this.getWeapons().pipe(
+      map((data: any) => {
+        const weapons = data.result.filter((w: any) => w.owner === localStorage.getItem('userId'))
 
+        if (weapons.length === 0) {
+          throw new Error('no weapons found')
+        }
+
+        return weapons
+
+      })
+    )
+  }
 
   getCharacterWithMods(): Observable<any> {
     return this.getCharacters().pipe(
       map((data: any) => {
-        // Find character from array whose campaignId matches that from localStorage
-        const findChar = data.result.find((char: any) => char.campaignId === localStorage.getItem('campaignId'));
+        // Find character from array whose owner field matches the userId localStorage
+        const char = data.result.find((c: any) => c.owner === localStorage.getItem('userId'));
 
-        if (!findChar) {
+        if (!char) {
           throw new Error('Character not found');
         }
 
@@ -62,16 +64,16 @@ export class CharacterService {
           return mod > 0 ? `+${mod}` : mod < 0 ? `${mod}` : '0';
         };
 
-        // calculateMod returns an object containing the stored character in findChar, and another object containing all the stat mods
+        // calculateMod returns an object containing the stored character in char, and another object containing all the stat mods
         return {
-          character: findChar,
+          character: char,
           mods: {
-            strMod: calculateMod(findChar.strength),
-            dexMod: calculateMod(findChar.dexterity),
-            conMod: calculateMod(findChar.constitution),
-            intMod: calculateMod(findChar.intelligence),
-            wisMod: calculateMod(findChar.wisdom),
-            chaMod: calculateMod(findChar.charisma),
+            strMod: calculateMod(char.strength),
+            dexMod: calculateMod(char.dexterity),
+            conMod: calculateMod(char.constitution),
+            intMod: calculateMod(char.intelligence),
+            wisMod: calculateMod(char.wisdom),
+            chaMod: calculateMod(char.charisma),
           }
         };
       })
