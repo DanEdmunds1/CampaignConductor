@@ -1,4 +1,4 @@
-import { Component, inject, HostListener, ComponentFactoryResolver } from '@angular/core';
+import { Component, inject, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterService } from '../character.service';
 import { PostService } from '../post.service';
@@ -13,6 +13,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './weapons-spellcasting.component.scss'
 })
 export class WeaponsSpellcastingComponent {
+  @ViewChild('dropdown') dropdown!: ElementRef;
   // Inject character service to use the data from api calls
   characterService: CharacterService = inject(CharacterService)
 
@@ -20,6 +21,7 @@ export class WeaponsSpellcastingComponent {
   weapons: any[] = []
   allSpells: any[] = []
   charSpells: any[] = []
+  learnableSpells: any[] = []
   character: any
 
   profBonus: number = 0
@@ -46,52 +48,51 @@ export class WeaponsSpellcastingComponent {
     )
   }
 
-
-  // On page load
-  ngOnInit(): void {
-
-    this.loadWeapons()
-    this.loadCharacter()
-
-    // this.spellLevels = this.getSpellLevels()
-    // console.log(this.spellLevels)
-
-
+  loadSpells() {
     this.characterService.getSpells().subscribe(
       (data: any) => {
         // Stores spells in the 'spells' array
+
         this.allSpells = data.result
         console.log(this.allSpells)
 
         const id = localStorage.getItem('userId'); // Get the user ID from localStorage
 
         // Filter the spells array
-        const help = this.allSpells.filter(spell => {
-         
+        const characterSpecificSpells = this.allSpells.filter(spell => {
+
           for (let i = 0; i < spell.owners.length; i++) {
             if (spell.owners[i].owner === id) {
               return true
             }
           }
           return false
-    
+
         });
-        
-        console.log('help', help); // Log the filtered spells to the console
-    
-        this.charSpells = help
+
+        this.charSpells = characterSpecificSpells
+
+        const spellsUserCanLearn = this.allSpells.filter(spell => !this.charSpells.includes(spell))
+
+        this.learnableSpells = spellsUserCanLearn
+
+        setTimeout(() => {
+          this.getSpellLevels()
+          console.log(this.spellLevels)
+        }, 500)
 
       }
+   
     )
-
-    setTimeout(() => {
-      this.spellLevels = this.getSpellLevels()
-      console.log(this.spellLevels)
-    }, 300)
+  }
 
 
+  // On page load
+  ngOnInit(): void {
 
-    console.log(this.charSpells)
+    this.loadWeapons()
+    this.loadCharacter()
+    this.loadSpells()
 
 
 
@@ -232,7 +233,91 @@ export class WeaponsSpellcastingComponent {
         levels.add(spell.level)
       }
     })
-    return [...levels].sort((a, b) => a - b)
+    console.log(this.spellLevels)
+    this.spellLevels = [...levels].sort((a, b) => a - b)
   }
 
+  removeSpell(spell: any) {
+    console.log(spell._id)
+    const owners = spell.owners
+
+
+    let ownerIndex: number = 0
+
+
+
+    // look through every object in the owners array
+    // if the key 'owner' matches the userId, return the index of that object to be used to select the owner to remove
+    //! the unset method for sanity does not have the ability to search dynamically based on content, so this is my own solution
+
+    for (let i = 0; i < owners.length; i++) {
+      if (owners[i]['owner'] === localStorage.getItem('userId')) {
+        ownerIndex = i
+      }
+    }
+
+    const id = spell._id
+    const parsedIndex = `owners[${ownerIndex}]`
+
+    this.postService.removeOwner(id, parsedIndex).subscribe({
+      next: (response) => {
+        this.postResponse = response;
+        console.log('Spell owner removed', response)
+        this.loadSpells()
+      },
+      error: (err) => {
+        this.errorMessage = `Error: ${err.message}`;
+        console.error('Error removing spell owner', err)
+      }
+    })
+
+  }
+
+  generateRandomString(length: number) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let randomString: string = ''
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters[randomIndex];
+    }
+
+    return randomString
+
+  }
+
+  learnSpell(spell: any) {
+
+      const selectedSpellId = (spell.target as HTMLSelectElement).value;
+    const selectedSpell = this.learnableSpells.find(spell => spell._id === selectedSpellId);
+
+    const keyString = this.generateRandomString(62)
+
+    const ownerObj = {
+      owner: localStorage.getItem('userId'),
+      _key: keyString
+    }
+
+    this.dropdown.nativeElement.value = ''
+
+
+    this.postService.learnSpell(selectedSpell._id, ownerObj).subscribe({
+      next: (response) => {
+        this.postResponse = response;
+        console.log('Spell learned', response)
+        this.loadSpells()
+      },
+      error: (err) => {
+        this.errorMessage = `Error: ${err.message}`;
+        console.error('Error learning spell', err)
+      }
+    })
+  }
+
+
+
+
+
+
 }
+

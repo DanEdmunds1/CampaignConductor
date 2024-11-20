@@ -136,6 +136,13 @@ $box-shadow-distance: 3px;
                     margin: 0;
                 }
 
+                .spell-info p span {
+                    &:hover {
+                        color: red;
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
 
             }
         

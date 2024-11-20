@@ -114,12 +114,10 @@ export class CharacterSheetComponent {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     // Check if the click is outside the weapon list
-    console.log('click detected')
     const clickedInside = event.target instanceof Element && event.target.closest('.creature');
 
     if (!clickedInside) {
       // If the click is outside, deselect the current weapon
-      console.log('click outside creature')
       this.selectedCreature = null;
     }
   }

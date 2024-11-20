@@ -98,7 +98,7 @@
                 <h5 *ngIf="level !== 0">{{level}}</h5>
 
                 <div class="spell-info" *ngFor="let spell of charSpells">
-                    <p *ngIf="spell.level === level">{{spell.name}} - {{spell.dmgDice}} - {{spell.dmgType}}</p>
+                    <p *ngIf="spell.level === level">{{spell.name}} - {{spell.dmgDice}} - {{spell.dmgType}}            <span *ngIf="showSpellOptions" (click)="removeSpell(spell)"> x</span></p>
                 </div>
             </article>
         </section>
@@ -106,9 +106,10 @@
 
         <div class="add-spell" *ngIf="showSpellOptions">
             <p>Add Spell</p>
-            <select name="spells" id="spells">
+            <select name="spells" id="spells" (change)="learnSpell($event)" #dropdown>
                 <option value="" disabled selected>select</option>
-                <option *ngFor="let spell of allSpells" value="{{spell.name}}">{{spell.name}} - {{spell.dmgDice}} -
+                <option *ngFor="let spell of learnableSpells" [value]="spell._id">
+                    {{spell.name}} - {{spell.dmgDice}} -
                     {{spell.dmgType}} - 
                     <span *ngIf="spell.level !== 0">lvl {{spell.level}}</span>
                     <span *ngIf="spell.level === 0">cantrip</span>

@@ -59,6 +59,58 @@ export class PostService {
     return this.http.post(this.createUrl, postData, { headers })
   }
 
+  removeOwner(idString: string, owner: string) {
+    console.log(idString)
+    console.log(owner)
+    // Format the request
+    const postData = {
+      mutations: [
+        {
+          patch: {
+            id: idString,
+            set: {}, 
+            unset: [
+              owner
+            ]
+          }
+          
+        }
+      ]
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    })
+    return this.http.post(this.createUrl, postData, { headers })
+  }
+
+  learnSpell(idString: string, owner: any) {
+    console.log(idString)
+    console.log(owner)
+    // Format the request
+    const postData = {
+      mutations: [
+        {
+          patch: {
+            id: idString,
+            insert: {
+              after: 'owners[-1]',
+              items: [
+                owner
+              ]
+            }
+          }
+          
+        }
+      ]
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    })
+    return this.http.post(this.createUrl, postData, { headers })
+  }
+
   createUser(user: any) {
     return this.http.post(this.createUrl, user)
   }
