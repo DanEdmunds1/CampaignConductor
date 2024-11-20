@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { PostService } from '../post.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-character',
@@ -10,6 +11,12 @@ import { PostService } from '../post.service';
   styleUrl: './create-character.component.scss'
 })
 export class CreateCharacterComponent {
+
+    // Allow use of router when login is successful
+    constructor(private router: Router) {
+
+    }
+  
 
   postService = inject(PostService)
 
@@ -36,10 +43,11 @@ export class CreateCharacterComponent {
       // Left column
       AC: new FormControl(0),
       initiative: new FormControl(0),
-      maxHp: new FormControl(0),
+      hp: new FormControl(0),
       image: new FormControl(''),
 
-      campaignId: new FormControl('')
+      campaignId: new FormControl(''),
+      owner: new FormControl('')
 
     })
 
@@ -65,12 +73,13 @@ export class CreateCharacterComponent {
         initiative: this.createCharacterForm.value.initiative,
         intelligence: this.createCharacterForm.value.intelligence,
         level: this.createCharacterForm.value.level,
-        maxHp: this.createCharacterForm.value.maxHp,
+        hp: this.createCharacterForm.value.hp,
         name: this.createCharacterForm.value.name,
         race: this.createCharacterForm.value.race,
         strength: this.createCharacterForm.value.strength,
         wisdom: this.createCharacterForm.value.wisdom,
-        campaignId: this.createCharacterForm.value.campaignId,
+        campaignId: localStorage.getItem('campaignId'),
+        owner: localStorage.getItem('userId'),
         _type: 'character'
       }
 
@@ -78,6 +87,7 @@ export class CreateCharacterComponent {
         next: (response) => {
           this.postResponse = response;
           console.log('Character created successfully', response)
+          this.router.navigateByUrl('/charactersheet')
         },
         error: (err) => {
           this.errorMessage = `Error: ${err.message}`;

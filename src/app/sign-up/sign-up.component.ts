@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -31,18 +32,44 @@ export class SignUpComponent {
   postResponse: any;
   errorMessage: string | undefined;
 
+  userService: UserService = inject(UserService)
+
+  allUsers: any[] = []
+
+  getUserId() {
+    this.userService.submitLogin('', '').subscribe(
+      (data: any) => {
+        this.allUsers = data.result
+        console.log(data.result)
+
+
+
+        const currentUser = this.allUsers.find((user: any) => user.username === this.createUserForm.value.username);
+
+        localStorage.setItem('userId', currentUser._id)
+        localStorage.setItem('userType', currentUser.isPlayer)
+        localStorage.setItem('campaignId', currentUser.campaignId)
+
+
+
+      }
+    )
+  }
+
+
+
   createUser() {
     this.createdUser = this.createUserForm.value
 
 
     // Convert values from form into boolean
     let isPlayerValue
-    if(this.createUserForm.value.isPlayer === "true") {
+    if (this.createUserForm.value.isPlayer === "true") {
       isPlayerValue = true
     } else {
       isPlayerValue = false
     }
-   
+
 
     const content = {
       username: this.createUserForm.value.username,
@@ -53,6 +80,7 @@ export class SignUpComponent {
     }
 
     console.log(content)
+   
 
 
 
@@ -60,9 +88,8 @@ export class SignUpComponent {
       next: (response) => {
         this.postResponse = response;
         console.log('User created successfully', response)
-
-        //! must navigate to create character OR DM Page
-        this.router.navigateByUrl('/home')
+        this.getUserId()
+        this.router.navigateByUrl('/createCharacter')
       },
       error: (err) => {
         this.errorMessage = `Error: ${err.message}`;

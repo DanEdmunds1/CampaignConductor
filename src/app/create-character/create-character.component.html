@@ -151,7 +151,7 @@
     
             <article class="form-item">
                 <label for="maxHp">Max HP</label>
-                <input type="number" class="number-field" formControlName="maxHp" 
+                <input type="number" class="number-field" formControlName="hp" 
     
                 onfocus="this.value = (this.value === '0') ? '' : this.value;" onblur="this.value = (this.value === '') ? '0' : this.value;"/>
             </article>
@@ -161,10 +161,6 @@
                 <input type="text" formControlName="image" placeholder="Image URL" />
             </article>
     
-            <article class="form-item">
-                <label for="campaignId">Campaign Id</label>
-                <input type="text" formControlName="campaignId" placeholder="Campaign Id" />
-            </article>
             <button type="submit">Create Character</button>
     
         </div>
