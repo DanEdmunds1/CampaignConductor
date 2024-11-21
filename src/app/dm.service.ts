@@ -21,7 +21,6 @@ export class DmService {
     return this.http.get(this.creatureUrl)
   }
 
- 
   updateHp(idString: string, value: any) {
     console.log(idString)
     console.log(value)

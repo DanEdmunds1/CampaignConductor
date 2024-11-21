@@ -122,5 +122,18 @@ export class PostService {
     return this.http.post(this.createUrl, savingThrows)
   }
 
+  generateRandomString(length: number) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let randomString: string = ''
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters[randomIndex];
+    }
+
+    return randomString
+
+  }
+
 
 }

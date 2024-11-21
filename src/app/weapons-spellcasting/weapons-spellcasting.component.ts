@@ -273,25 +273,25 @@ export class WeaponsSpellcastingComponent {
 
   }
 
-  generateRandomString(length: number) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    let randomString: string = ''
+  // generateRandomString(length: number) {
+  //   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  //   let randomString: string = ''
 
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      randomString += characters[randomIndex];
-    }
+  //   for (let i = 0; i < length; i++) {
+  //     const randomIndex = Math.floor(Math.random() * characters.length);
+  //     randomString += characters[randomIndex];
+  //   }
 
-    return randomString
+  //   return randomString
 
-  }
+  // }
 
   learnSpell(spell: any) {
 
       const selectedSpellId = (spell.target as HTMLSelectElement).value;
     const selectedSpell = this.learnableSpells.find(spell => spell._id === selectedSpellId);
 
-    const keyString = this.generateRandomString(62)
+    const keyString = this.postService.generateRandomString(62)
 
     const ownerObj = {
       owner: localStorage.getItem('userId'),

@@ -119,11 +119,6 @@ export class DmPageComponent {
     const formGiven = form
     const prefixGiven = prefix
 
-    const elements = document.querySelectorAll('*')
-    const elementsArray = Array.from(elements)
-
-
-
     for (const [key, value] of Object.entries(formGiven)) {
 
       const element = document.getElementById(`${prefixGiven}-${key}`)
@@ -135,17 +130,6 @@ export class DmPageComponent {
         element?.classList.remove(`${prefixGiven}-invalid`)
       }
     }
-
-    // // Check if any element contains the specified class
-    // for (let element of elementsArray) {
-    //   if (element.classList.contains(`${prefixGiven}-invalid`)) {
-    //     console.log('class spotted')
-    //     return false; // Return false as soon as one element has the class
-    //   }
-    // }
-
-    // console.log('no class sighted')
-    // return 'isValid'
   }
 
 

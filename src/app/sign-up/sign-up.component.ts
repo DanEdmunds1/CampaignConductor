@@ -3,24 +3,23 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { ClipboardModule, Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ClipboardModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
 
   // Allow use of router when user creation is complete
-  constructor(private router: Router) {
+  constructor(private router: Router, private clipboard: Clipboard) {
 
   }
 
   postService = inject(PostService)
-
-  createdUser: any = ''
 
   createUserForm = new FormGroup({
     username: new FormControl(''),
@@ -49,17 +48,20 @@ export class SignUpComponent {
         localStorage.setItem('userId', currentUser._id)
         localStorage.setItem('userType', currentUser.isPlayer)
         localStorage.setItem('campaignId', currentUser.campaignId)
-
-
-
       }
     )
+  }
+
+  generateRandomKey() {
+    const string = this.postService.generateRandomString(62)
+
+    this.clipboard.copy(string)
+    alert('Copied to clipboard')
   }
 
 
 
   createUser() {
-    this.createdUser = this.createUserForm.value
 
 
     // Convert values from form into boolean
@@ -82,9 +84,11 @@ export class SignUpComponent {
     console.log(content)
    
 
+   // Check if all fields have non-empty values
+   const allFieldsFilled = Object.values(content).every(value => value !== null && value !== undefined && value !== '');
 
-
-    this.postService.post(content).subscribe({
+   if (allFieldsFilled) {
+        this.postService.post(content).subscribe({
       next: (response) => {
         this.postResponse = response;
         console.log('User created successfully', response)
@@ -96,6 +100,11 @@ export class SignUpComponent {
         console.error('Error creating user', err)
       }
     })
+   } else {
+    console.log('missing signup fields')
+  }
+
+
   }
 
 }
