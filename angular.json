@@ -33,13 +33,15 @@
             ],
             "styles": [
               "src/styles.scss"
-            ]
-
-
-
-
-
+            ],
             
+            "deployUrl": "/CampaignConductor"
+
+
+
+
+
+
           },
           "configurations": {
             "production": {
