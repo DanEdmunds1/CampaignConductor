@@ -17,8 +17,6 @@ $left-box-margin: 40px;
                 height: 150px;
                 width: 150px;
                 margin-right: $left-box-margin;
-
-
             }
 
 
@@ -73,8 +71,6 @@ $left-box-margin: 40px;
                     }
 
                 }
-
-
             }
 
             .level-row {
@@ -96,42 +92,27 @@ $left-box-margin: 40px;
                         font-size: 20px;
                     }
                 }
-
-
             }
-
         }
-
     }
-
-
     .stats-box {
         display: flex;
         justify-content: center;
         width: 100%;
         border: 1px solid #FFD700;
-
-
         .stat {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 0 10px 0 10px;
-
             .mod {
                 color: #FFD700;
             }
         }
     }
-
-    // Underneath stats box
     .bottom-half {
-
-
         .bottom-left-box {
-
             margin: 20px;
-
             .ac-container {
                 height: 100px;
                 width: 100px;
@@ -143,21 +124,13 @@ $left-box-margin: 40px;
                 align-items: center;
                 justify-content: center;
             }
-
             .hp-box {
                 #max {
                     color: gray;
                 }
             }
-
         }
-
     }
-
-    // Weapons/Spells
-    // Saving Throws / Skills
-    
-
     .creatures-section {
         border: 1px solid #FFD700;
         display: flex;
@@ -165,27 +138,21 @@ $left-box-margin: 40px;
         align-items: center;
         width: 100%;
         margin: 0;
-
         #title {
             text-decoration: underline;
             font-size: 25px;
         }
-
         .creatures-box {
             display: flex;
             flex-wrap: wrap;
-
             .creature {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-
                 border: 1px solid black;
                 margin: 30px;
-
                 width: 250px;
                 height: 250px;
-
                 .creature-top {
                     font-weight: bold;
                     height: 70%;
@@ -197,19 +164,15 @@ $left-box-margin: 40px;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-
                     background-position: center;
                     background-repeat: no-repeat;
                     background-size: cover;
-
                     .important-stats {
                         display: flex;
                         width: 100%;
                         justify-content: space-evenly;
-                        
                     }
                 }
-
                 .creature-info {
                     display: flex;
                     flex-direction: column;
@@ -217,22 +180,15 @@ $left-box-margin: 40px;
                     align-items: center;
                     height: 30%;
                     padding-top: 15px;
-
                     p {
                         margin: 0 20px 0 0;
                         font-weight: bold;
                     }
-
-
                 }
             }
         }
-
     }
-
-
 }
-
 .selected {
     border: 1px solid red !important;
 }
