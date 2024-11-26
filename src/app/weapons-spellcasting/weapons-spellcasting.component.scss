@@ -10,10 +10,14 @@ $box-shadow-distance: 3px;
     text-align: center;
     width: 20%;
     margin: 5px;
+
+    @media only screen and (max-width: 980px) {
+        width: 100px;
+    }
+
 }
 
 @mixin spell-alignment {
-
     width: 80%;
 }
 
@@ -26,10 +30,6 @@ $box-shadow-distance: 3px;
     flex-direction: column;
     align-items: center;
     height: 90%;
-
-
-
-
 
 
     .weapons-box {
@@ -46,6 +46,7 @@ $box-shadow-distance: 3px;
             h4 {
                 margin: 10px 0 15px 0;
             }
+
             span {
                 &:hover {
                     text-decoration: underline;
@@ -76,21 +77,54 @@ $box-shadow-distance: 3px;
         }
     }
 
+    .weapon-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin-bottom: 20px;
+
+        .form-item {
+            margin: 10px 8px 0 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            input {
+                text-align: center;
+
+            }
+
+            #bonus {
+                width: 30px;
+            }
+        }
+
+        button {
+            height: 22px;
+            margin: 20px 8px 0 8px;
+        }
+    }
+
     .spells-box {
-     
+
         display: flex;
         flex-direction: column;
         align-items: center;
         // border: 1px solid gold;
         width: 90%;
+
         .title-box {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
+
             h4 {
                 margin: 0;
             }
+
             span {
                 &:hover {
                     text-decoration: underline;
@@ -106,47 +140,56 @@ $box-shadow-distance: 3px;
             }
         }
 
-     
 
-            .spell-display {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
 
-                .spell-level-box-left {
-                    align-self: start;
-                    @include spell-alignment();
-                    padding-left: 20px;
- 
-                }
+        .spell-display {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
 
-                .spell-level-box-right {
-                    align-self: end;
-                    @include spell-alignment();
-                    padding-right: 20px;
-
-                    text-align: end;
-
-                }
-
-                h5 {
-                    margin: 0;
-                }
-                p {
-                    margin: 0;
-                }
-
-                .spell-info p span {
-                    &:hover {
-                        color: red;
-                        cursor: pointer;
-                        text-decoration: underline;
-                    }
-                }
+            .spell-level-box-left {
+                align-self: start;
+                @include spell-alignment();
+                padding-left: 20px;
 
             }
-        
-       
+
+            .spell-level-box-right {
+                align-self: end;
+                @include spell-alignment();
+                padding-right: 20px;
+
+                text-align: end;
+
+            }
+
+            h5 {
+                margin: 0;
+            }
+
+            p {
+                margin: 0;
+                position: relative;
+            }
+
+            .spell-name {
+                &:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+
+            .spell-info p .remove {
+                &:hover {
+                    color: red;
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+
+        }
+
+
     }
 
 }
@@ -157,4 +200,31 @@ $box-shadow-distance: 3px;
         background-color: #4682B4 !important;
         // I know it's not generally recommended to use !important but I promise to be good and only use it this once
     }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.pop-up-parent {
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.pop-up {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1; /* Ensure the popup is on top */
+    width: 300px;
+    text-align: start;
 }

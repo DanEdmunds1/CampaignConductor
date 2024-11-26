@@ -19,6 +19,8 @@ export class HomeComponent {
 
   ngDoCheck(): void {
     this.isPlayer = this.userTypeService.getUserType();
+
+    console.log(this.isPlayer)
   }
 
 }

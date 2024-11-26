@@ -4,7 +4,7 @@
     <section class="weapons-box">
         <section class="title-box">
             <h4>Weapons <span (click)="toggleShowWeaponOptions()">⌄</span></h4>
-           
+
         </section>
         <article class="headers">
             <p>NAME</p>
@@ -31,52 +31,47 @@
         </div>
     </section>
 
-    <form *ngIf="showWeaponOptions === true" [formGroup]="createWeaponForm" (submit)="createWeapon()">
-        <div class="weapon-form">
+    <form *ngIf="showWeaponOptions === true" [formGroup]="createWeaponForm" (submit)="createWeapon()"
+        class="weapon-form">
 
 
-            <article class="form-item">
-                <label for="name">Name</label>
-                <input type="text" formControlName="name" placeholder="Weapon Name" />
-            </article>
+        <article class="form-item">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" placeholder="Weapon Name" />
+        </article>
 
-            <article class="form-item">
-                <label for="atkBonus">Atk Bonus</label>
-                <input type="number" class="number-field" formControlName="atkBonus" />
-            </article>
+        <article class="form-item">
+            <label for="atkBonus">Atk Bonus</label>
+            <input type="number" id="bonus" formControlName="atkBonus" />
+        </article>
 
-            <article class="form-item">
-                <label for="dmgDice">Dmg Dice</label>
-                <select formControlName="dmgDice">
-                    <option value="" disabled selected>Dmg Dice</option>
-                    <option value="1d4">1d4</option>
-                    <option value="1d6">1d6</option>
-                    <option value="1d8">1d8</option>
-                    <option value="1d10">1d10</option>
-                    <option value="1d12">1d12</option>
-                    <option value="2d6">2d6</option>
-                </select>
-            </article>
+        <article class="form-item">
+            <label for="dmgDice">Dmg Dice</label>
+            <select formControlName="dmgDice">
+                <option value="" disabled selected>Dmg Dice</option>
+                <option value="1d4">1d4</option>
+                <option value="1d6">1d6</option>
+                <option value="1d8">1d8</option>
+                <option value="1d10">1d10</option>
+                <option value="1d12">1d12</option>
+                <option value="2d6">2d6</option>
+            </select>
+        </article>
 
-            <article class="form-item">
-                <label for="dmgType">Dmg Type</label>
-                <select formControlName="dmgType">
-                    <option value="" disabled selected>Dmg Type</option>
-                    <option value="piercing">Piercing</option>
-                    <option value="slasing">Slasing</option>
-                    <option value="bludgeoning">Bludgeoning</option>
-                </select>
-            </article>
+        <article class="form-item">
+            <label for="dmgType">Dmg Type</label>
+            <select formControlName="dmgType">
+                <option value="" disabled selected>Dmg Type</option>
+                <option value="piercing">Piercing</option>
+                <option value="slasing">Slasing</option>
+                <option value="bludgeoning">Bludgeoning</option>
+            </select>
+        </article>
 
-            <button type="submit">Create Weapon</button>
-
-        </div>
-
-
-
+        <button type="submit">Create Weapon</button>
     </form>
 
-
+    <p style="color: #8B0000;" *ngIf="displayCreateWeaponError === true">Please complete all form items</p>
 
     <section class="spells-box">
 
@@ -98,7 +93,17 @@
                 <h5 *ngIf="level !== 0">{{level}}</h5>
 
                 <div class="spell-info" *ngFor="let spell of charSpells">
-                    <p *ngIf="spell.level === level">{{spell.name}} - {{spell.dmgDice}} - {{spell.dmgType}}            <span *ngIf="showSpellOptions" (click)="removeSpell(spell)"> x</span></p>
+                    <p class="pop-up-parent" *ngIf="spell.level === level">
+                        <span class="spell-name" (mouseover)="showSpellEffect(spell._id)"
+                        (mouseleave)="hideSpellEffect()">
+                          {{spell.name}}  
+                        </span>
+                         - {{spell.dmgDice}} - {{spell.dmgType}} 
+                        <span class="remove" *ngIf="showSpellOptions" 
+                        (click)="removeSpell(spell)"> x</span>
+                        <span class="pop-up" *ngIf="selectedSpell === spell._id && spell.level === level">{{spell.effect}}</span>
+                    </p>
+                   
                 </div>
             </article>
         </section>
@@ -110,12 +115,12 @@
                 <option value="" disabled selected>select</option>
                 <option *ngFor="let spell of learnableSpells" [value]="spell._id">
                     {{spell.name}} - {{spell.dmgDice}} -
-                    {{spell.dmgType}} - 
+                    {{spell.dmgType}} -
                     <span *ngIf="spell.level !== 0">lvl {{spell.level}}</span>
                     <span *ngIf="spell.level === 0">cantrip</span>
                 </option>
             </select>
         </div>
-       
+
     </section>
 </div>

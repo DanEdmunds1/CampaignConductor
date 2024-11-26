@@ -122,7 +122,6 @@ export class WeaponsSpellcastingComponent {
 
   ngOnDestroy() {
     // Clean up the listener when the component is destroyed to avoid memory leaks
-    // Since we're using @HostListener, Angular handles the cleanup for us.
   }
 
 
@@ -141,8 +140,11 @@ export class WeaponsSpellcastingComponent {
     owner: new FormControl('')
   })
 
+  // toggle error message telling user to complete all form items to create a weapon
+  displayCreateWeaponError: Boolean = false
 
-// Function to add a weapon to the character sheet
+
+  // Function to add a weapon to the character sheet
   createWeapon() {
     // format data to be sent via api call
     const content = {
@@ -154,23 +156,35 @@ export class WeaponsSpellcastingComponent {
       _type: 'weapon'
     }
 
-    // call the post function
-    this.postService.post(content).subscribe({
-      next: (response) => {
-        this.postResponse = response;
-        console.log('Weapon created successfully', response)
-        // reset weapon form
-        this.createWeaponForm.reset()
-        // close the weapon options
-        this.toggleShowWeaponOptions()
-        // re-render weapons, now showing the newly added weapon
-        this.loadWeapons()
-      },
-      error: (err) => {
-        this.errorMessage = `Error: ${err.message}`;
-        console.error('Error creating weapon', err)
-      }
-    })
+    // Check if all fields have non-empty values
+    const allFieldsFilled = Object.values(content).every(value => value !== null && value !== undefined && value !== '');
+
+
+    if (allFieldsFilled) {
+      // call the post function
+      this.postService.post(content).subscribe({
+        next: (response) => {
+          this.postResponse = response;
+          console.log('Weapon created successfully', response)
+          // reset weapon form
+          this.createWeaponForm.reset()
+          // close the weapon options
+          this.toggleShowWeaponOptions()
+          // re-render weapons, now showing the newly added weapon
+          this.loadWeapons()
+          // remove error message
+          this.displayCreateWeaponError = false
+        },
+        error: (err) => {
+          this.errorMessage = `Error: ${err.message}`;
+          console.error('Error creating weapon', err)
+        }
+      })
+    } else {
+      console.log('missing weapon fields')
+      this.displayCreateWeaponError = true
+    }
+
   }
 
   // Function to remove a weapon from the chracter sheet
@@ -195,7 +209,7 @@ export class WeaponsSpellcastingComponent {
   toggleShowWeaponOptions() {
     this.showWeaponOptions = !this.showWeaponOptions
   }
-// Toggle for showing spell options
+  // Toggle for showing spell options
   showSpellOptions: Boolean = false
   toggleShowSpellOptions() {
     this.showSpellOptions = !this.showSpellOptions
@@ -333,6 +347,17 @@ export class WeaponsSpellcastingComponent {
         console.error('Error learning spell', err)
       }
     })
+  }
+
+  selectedSpell: string | null = null
+
+  showSpellEffect(spell: string) {
+    this.selectedSpell = spell
+  }
+
+  // Reset the selected spell when mouse leaves
+  hideSpellEffect() {
+    this.selectedSpell = null;
   }
 
 }

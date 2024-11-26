@@ -10,7 +10,7 @@
             <a [routerLink]="['/signup']">Sign Up</a>
         </div>
 
-        <div class="no-user" *ngIf="!isPlayer">
+        <div class="no-user" *ngIf="isPlayer === 'default'">
             <a [routerLink]="['/login']">Login</a>
             <a [routerLink]="['/signup']">Sign Up</a>
         </div>

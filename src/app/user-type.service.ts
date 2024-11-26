@@ -11,7 +11,6 @@ export class UserTypeService {
 
   getUserType(): string {
     if (isPlatformBrowser(this.platformId)) {
-      // Safely access localStorage here
       return localStorage.getItem('userType') || 'default';
     } else {
       // Handle SSR scenario or return a default value
