@@ -14,8 +14,10 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class WeaponsSpellcastingComponent {
   @ViewChild('dropdown') dropdown!: ElementRef;
-  // Inject character service to use the data from api calls
+
+  // Inject services to use the data from api calls
   characterService: CharacterService = inject(CharacterService)
+  postService = inject(PostService)
 
   // Create arrays to store the data from api calls
   weapons: any[] = []
@@ -24,6 +26,7 @@ export class WeaponsSpellcastingComponent {
   learnableSpells: any[] = []
   character: any
 
+  // initialise variables
   profBonus: number = 0
   selectedWeapon: any = null
 
@@ -41,7 +44,7 @@ export class WeaponsSpellcastingComponent {
   loadCharacter() {
     this.characterService.getCharacterWithMods().subscribe(
       (data: any) => {
-        // Store character in the 'character' array
+        // Store character in the 'character' object
         this.character = data
         this.profBonus = Math.floor((this.character.character.level - 1) / 4) + 2
       }
@@ -58,7 +61,7 @@ export class WeaponsSpellcastingComponent {
 
         const id = localStorage.getItem('userId'); // Get the user ID from localStorage
 
-        // Filter the spells array
+        // Filter the spells array and return the spells the character has
         const characterSpecificSpells = this.allSpells.filter(spell => {
 
           for (let i = 0; i < spell.owners.length; i++) {
@@ -69,35 +72,34 @@ export class WeaponsSpellcastingComponent {
           return false
 
         });
-
         this.charSpells = characterSpecificSpells
 
+        // store spells that the character does not have for the all spells dropdown
         const spellsUserCanLearn = this.allSpells.filter(spell => !this.charSpells.includes(spell))
 
         this.learnableSpells = spellsUserCanLearn
 
+        // wait for spells to load in before calling the spell levels function
         setTimeout(() => {
           this.getSpellLevels()
           console.log(this.spellLevels)
         }, 500)
 
       }
-   
+
     )
   }
 
 
   // On page load
   ngOnInit(): void {
-
     this.loadWeapons()
     this.loadCharacter()
     this.loadSpells()
-
-
-
   }
 
+
+  // Toggle for showing which weapon the user last clicked on
   toggleSelectedWeapon(weapon: any) {
     if (this.selectedWeapon === weapon) {
       this.selectedWeapon = null
@@ -123,13 +125,14 @@ export class WeaponsSpellcastingComponent {
     // Since we're using @HostListener, Angular handles the cleanup for us.
   }
 
-  postService = inject(PostService)
+
+
 
   // Initialise variables to store api responses
   postResponse: any;
   errorMessage: string | undefined;
 
-  // Create the form object
+  // Create the weapon form object
   createWeaponForm = new FormGroup({
     name: new FormControl(''),
     atkBonus: new FormControl(0),
@@ -138,7 +141,10 @@ export class WeaponsSpellcastingComponent {
     owner: new FormControl('')
   })
 
+
+// Function to add a weapon to the character sheet
   createWeapon() {
+    // format data to be sent via api call
     const content = {
       name: this.createWeaponForm.value.name,
       atkBonus: this.createWeaponForm.value.atkBonus,
@@ -148,15 +154,17 @@ export class WeaponsSpellcastingComponent {
       _type: 'weapon'
     }
 
+    // call the post function
     this.postService.post(content).subscribe({
       next: (response) => {
         this.postResponse = response;
         console.log('Weapon created successfully', response)
+        // reset weapon form
         this.createWeaponForm.reset()
+        // close the weapon options
         this.toggleShowWeaponOptions()
+        // re-render weapons, now showing the newly added weapon
         this.loadWeapons()
-
-
       },
       error: (err) => {
         this.errorMessage = `Error: ${err.message}`;
@@ -165,11 +173,14 @@ export class WeaponsSpellcastingComponent {
     })
   }
 
+  // Function to remove a weapon from the chracter sheet
   deleteWeapon(id: string) {
+    // call the post function
     this.postService.delete(id).subscribe({
       next: (response) => {
         this.postResponse = response;
         console.log('Creature deleted successfully', response)
+        // re-render weapons, now without the deleted weapon
         this.loadWeapons()
       },
       error: (err) => {
@@ -179,23 +190,27 @@ export class WeaponsSpellcastingComponent {
     })
   }
 
+  // Toggle for showing weapon options
   showWeaponOptions: Boolean = false
   toggleShowWeaponOptions() {
     this.showWeaponOptions = !this.showWeaponOptions
   }
-
-  showSpellOptions: Boolean = true
+// Toggle for showing spell options
+  showSpellOptions: Boolean = false
   toggleShowSpellOptions() {
     this.showSpellOptions = !this.showSpellOptions
   }
 
+  // Function to calculate spell-related information to be displayed on character sheet
   calcSpellInfo() {
+    // get character stats
     const int = this.character.character.intelligence
     const wis = this.character.character.wisdom
     const cha = this.character.character.charisma
-
+    // find the highest stat, which will be the stat used for spell casting
     const highestValue = Math.max(int, wis, cha)
 
+    // store a string of the highest stat in the 'ability' variable
     let ability
     if (highestValue === int) {
       ability = 'intelligence';
@@ -204,16 +219,21 @@ export class WeaponsSpellcastingComponent {
     } else {
       ability = 'charisma';
     }
-
+    // format the string to the way I want it displayed
+    //* note that I do not format in the ability-setting if statement, as I use the original strings to calculate the stat mods
     const parsedAbility = ability.slice(0, 3).toUpperCase()
 
+    // calculate the stat mods, i.e. +2, -1, 0, etc
     const score = this.character.character[ability]
     const mod = Math.floor((score - 10) / 2)
 
+    // calculate spell save DC
     const dc = 8 + this.profBonus + mod
 
+    // calculate spell attack bonus
     const bonus = this.profBonus + mod
 
+    // store relevant info in return statement object
     return {
       ability: parsedAbility,
       dc: dc,
@@ -221,48 +241,55 @@ export class WeaponsSpellcastingComponent {
     }
   }
 
+  // initialise a variable to store the spell levels of the spells a character has
   spellLevels: number[] = []
 
-
+  // Function to extract the spell levels of all spells a character has, and insert a unique set of them into the spellLevels array
   getSpellLevels() {
-
+    // initialise a new set
     const levels = new Set<number>()
 
+    // for each spell, if its level exists, push it into the levels set
     this.charSpells.forEach(spell => {
       if (spell.level !== undefined) {
         levels.add(spell.level)
       }
     })
     console.log(this.spellLevels)
+    // ensure spellLevels only contains one of each spell level
     this.spellLevels = [...levels].sort((a, b) => a - b)
   }
 
+
+  //* Function to remove a spell by removing the character's id from the 'owners' array of a spell
   removeSpell(spell: any) {
     console.log(spell._id)
+    // store the spell's 'owners' array in a variable
     const owners = spell.owners
 
-
+    // intialise variable to store the index of the relevant user/character id in the 'owners' array
     let ownerIndex: number = 0
-
-
 
     // look through every object in the owners array
     // if the key 'owner' matches the userId, return the index of that object to be used to select the owner to remove
-    //! the unset method for sanity does not have the ability to search dynamically based on content, so this is my own solution
-
+    // the unset method for sanity does not have the ability to search dynamically based on content, so this is my solution
     for (let i = 0; i < owners.length; i++) {
       if (owners[i]['owner'] === localStorage.getItem('userId')) {
         ownerIndex = i
       }
     }
 
+    // variable to store the spell's id
     const id = spell._id
+    // format the index of the relevant owner to be passed into the removeOwner function
     const parsedIndex = `owners[${ownerIndex}]`
 
+    // call the removeOwner function
     this.postService.removeOwner(id, parsedIndex).subscribe({
       next: (response) => {
         this.postResponse = response;
         console.log('Spell owner removed', response)
+        // re-render spells, now without the deleted spell
         this.loadSpells()
       },
       error: (err) => {
@@ -273,38 +300,32 @@ export class WeaponsSpellcastingComponent {
 
   }
 
-  // generateRandomString(length: number) {
-  //   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  //   let randomString: string = ''
 
-  //   for (let i = 0; i < length; i++) {
-  //     const randomIndex = Math.floor(Math.random() * characters.length);
-  //     randomString += characters[randomIndex];
-  //   }
-
-  //   return randomString
-
-  // }
-
+  //* Function to learn a spell by adding the character's id to the 'owners' array of a spell
   learnSpell(spell: any) {
 
-      const selectedSpellId = (spell.target as HTMLSelectElement).value;
+    // target the spell clicked on
+    const selectedSpellId = (spell.target as HTMLSelectElement).value;
+    // search through all spells the character does not have, and find the one whose id matches the spell clicked on
     const selectedSpell = this.learnableSpells.find(spell => spell._id === selectedSpellId);
 
+    // generate a random string to be used as a unique key when creating a new owner object in the spell's 'owners' array
     const keyString = this.postService.generateRandomString(62)
 
+    // format the data to be sent to sanity via HTTP request
     const ownerObj = {
       owner: localStorage.getItem('userId'),
       _key: keyString
     }
 
+    // reset the dropdown when a spell is clicked on
     this.dropdown.nativeElement.value = ''
-
 
     this.postService.learnSpell(selectedSpell._id, ownerObj).subscribe({
       next: (response) => {
         this.postResponse = response;
         console.log('Spell learned', response)
+        // re-render spells, now with the new spell added to the character sheet
         this.loadSpells()
       },
       error: (err) => {
@@ -314,10 +335,4 @@ export class WeaponsSpellcastingComponent {
     })
   }
 
-
-
-
-
-
 }
-

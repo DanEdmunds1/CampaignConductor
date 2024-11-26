@@ -15,12 +15,13 @@ import { ClipboardModule, Clipboard } from '@angular/cdk/clipboard';
 export class SignUpComponent {
 
   // Allow use of router when user creation is complete
-  constructor(private router: Router, private clipboard: Clipboard) {
+  constructor(private router: Router, private clipboard: Clipboard) { }
 
-  }
-
+  // Allow use of functions inside services
   postService = inject(PostService)
+  userService: UserService = inject(UserService)
 
+  // Create form object to create a new user
   createUserForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -28,11 +29,12 @@ export class SignUpComponent {
     campaignId: new FormControl('')
   })
 
+  // Initialise variables to store response and error messages
   postResponse: any;
   errorMessage: string | undefined;
 
-  userService: UserService = inject(UserService)
 
+  // initialise array to store all users
   allUsers: any[] = []
 
   getUserId() {
@@ -82,27 +84,27 @@ export class SignUpComponent {
     }
 
     console.log(content)
-   
 
-   // Check if all fields have non-empty values
-   const allFieldsFilled = Object.values(content).every(value => value !== null && value !== undefined && value !== '');
 
-   if (allFieldsFilled) {
-        this.postService.post(content).subscribe({
-      next: (response) => {
-        this.postResponse = response;
-        console.log('User created successfully', response)
-        this.getUserId()
-        this.router.navigateByUrl('/createCharacter')
-      },
-      error: (err) => {
-        this.errorMessage = `Error: ${err.message}`;
-        console.error('Error creating user', err)
-      }
-    })
-   } else {
-    console.log('missing signup fields')
-  }
+    // Check if all fields have non-empty values
+    const allFieldsFilled = Object.values(content).every(value => value !== null && value !== undefined && value !== '');
+
+    if (allFieldsFilled) {
+      this.postService.post(content).subscribe({
+        next: (response) => {
+          this.postResponse = response;
+          console.log('User created successfully', response)
+          this.getUserId()
+          this.router.navigateByUrl('/createCharacter')
+        },
+        error: (err) => {
+          this.errorMessage = `Error: ${err.message}`;
+          console.error('Error creating user', err)
+        }
+      })
+    } else {
+      console.log('missing signup fields')
+    }
 
 
   }

@@ -5,8 +5,17 @@
 
         <a *ngIf="isPlayer === 'true'" [routerLink]="['/charactersheet']">Character Sheet</a>
         <a *ngIf="isPlayer === 'false'" [routerLink]="['/dm-page']">DM View</a>
-        <a *ngIf="isPlayer === 'no-user'" [routerLink]="['/login']">Login</a>
-    
+        <div class="no-user" *ngIf="isPlayer === 'no-user'">
+            <a [routerLink]="['/login']">Login</a>
+            <a [routerLink]="['/signup']">Sign Up</a>
+        </div>
+
+        <div class="no-user" *ngIf="!isPlayer">
+            <a [routerLink]="['/login']">Login</a>
+            <a [routerLink]="['/signup']">Sign Up</a>
+        </div>
+
+
     </section>
 
 </div>

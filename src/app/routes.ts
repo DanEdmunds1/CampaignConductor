@@ -11,7 +11,7 @@ import { LogoutComponent } from './logout/logout.component';
 const routeConfig: Routes = [
     // When you first enter the site, go straight to login page
     {
-        path: '', redirectTo:'login', pathMatch:'full'
+        path: '', redirectTo:'home', pathMatch:'full'
     },
     {
         path: 'home',
