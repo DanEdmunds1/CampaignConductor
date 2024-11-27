@@ -2,12 +2,14 @@
     <a [routerLink]="['/home']">Home</a>
     <a [routerLink]="['/charactersheet']">Character Sheet</a>
     <a [routerLink]="['/logout']">Logout</a>
+    <p (click)="copyId()">Id<span class="pop-up">{{campaignId}}</span></p>
 </div>
 
 <div *ngIf="isPlayer === 'false'" class="header">
     <a [routerLink]="['/home']">Home</a>
     <a [routerLink]="['/dm-page']">DM View</a>
     <a [routerLink]="['/logout']">Logout</a>
+    <p (click)="copyId()">Id<span class="pop-up">{{campaignId}}</span></p>
 </div>
 
 <div *ngIf="isPlayer === 'no-user'" class="header">

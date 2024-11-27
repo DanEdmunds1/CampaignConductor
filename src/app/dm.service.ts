@@ -48,4 +48,31 @@ export class DmService {
         return this.http.post(this.createUrl, postData, { headers })
   }
 
+  updateHitdice(idString: string, value: any) {
+    console.log(idString)
+    console.log(value)
+
+        // Format the request
+        const postData = {
+          mutations: [
+            {
+              patch: 
+              {
+                id: idString,
+                set: {
+                  hitdice: value
+                }
+              }
+              
+            }
+          ]
+        }
+        console.log(postData)
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        })
+        return this.http.post(this.createUrl, postData, { headers })
+  }
+
 }

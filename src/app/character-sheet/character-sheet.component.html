@@ -73,7 +73,13 @@
             <div class="hp-box">
                 <p id="max">Max HP: {{character.maxHp}}</p>
                 <p id="hp">HP: {{character.hp}}</p>
+                <form class="hitdice-form" [formGroup]="hitDiceForm">
+                    <label for="name">{{character.hitdice}} hit dice available</label>
+                    <input id="hitdice-input" type="number" formControlName="numOfDice" placeholder={{character.level}} min="0" max={{character.hitdice}} (keydown)="preventTyping($event)" />
+                </form>
+                <button (click)="useHitDice()">Use</button>
             </div>
+            <button (click)="longRest()">Long Rest</button>
         </section>
 
         <app-weapons-spellcasting style="width: 65%;"></app-weapons-spellcasting>
@@ -85,7 +91,8 @@
     <div class="creatures-section">
         <p id="title">HOSTILE CREATURES</p>
         <section class="creatures-box">
-            <div *ngFor="let creature of creatures" class="creature" id="{{creature.name}}"  [class.selected]="creature === selectedCreature" (click)="handleSelect(creature, creature.name)">
+            <div *ngFor="let creature of creatures" class="creature" id="{{creature.name}}"
+                [class.selected]="creature === selectedCreature" (click)="handleSelect(creature, creature.name)">
                 <section class="creature-top" *ngIf="!creature.image">
                     <p id="name">{{creature.name}}</p>
                     <div class="important-stats"></div>
@@ -93,7 +100,7 @@
                 <section class="creature-info" *ngIf="!creature.image"></section>
 
                 <section class="creature-top" *ngIf="creature.image" style="background-image: url({{creature.image}});">
-                    
+
                     <div class="important-stats"></div>
                 </section>
 

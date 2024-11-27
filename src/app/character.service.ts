@@ -80,5 +80,37 @@ export class CharacterService {
     );
   }
 
+    // generate a random integer between min and max inclusive
+    getRandomInt(min: number, max: number): number {
+      return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+
+   // parse dice roll string and generate damage
+   rollDice(dice: string): number {
+
+    // Regex to match dice format
+    const regex = /^(\d+)d(\d+)$/;
+    const match = dice.match(regex)
+
+    if (match) {
+      // parse string to number via regex expression, 10 specifies radix in which number is represented
+      const diceNum = parseInt(match[1], 10)
+      const sidesNum = parseInt(match[2], 10)
+
+      let total = 0
+
+      // roll each dice
+      for (let i = 0; i < diceNum; i++) {
+        total += this.getRandomInt(1, sidesNum)
+      }
+      console.log('TOTAL')
+      console.log(total)
+
+      return total
+    } else {
+      throw new Error('invalid dice notation')
+    }
+  }
+
   constructor() { }
 }

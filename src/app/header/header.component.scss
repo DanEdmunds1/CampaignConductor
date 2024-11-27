@@ -14,15 +14,50 @@
 
         transition: background-color 0.5s, color 0.5s;
 
-       
+
 
         &:hover {
             transform: scale(1.1);
             background-color: #FFD700;
-      
-
-  
         }
 
+    }
+
+    p {
+        margin-top: 10px;
+        color: #2F4F4F;
+        text-decoration: underline;
+
+        &:hover {
+            cursor: pointer;
+
+            .pop-up {
+                visibility: visible;
+            }
+        }
+
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .pop-up {
+        visibility: hidden;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+        /* Ensure the popup is on top */
+        width: auto;
+        text-align: start;
+        left: auto;
+        right: 0;
+        top: 30px;
     }
 }

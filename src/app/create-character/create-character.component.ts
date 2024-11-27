@@ -20,8 +20,6 @@ export class CreateCharacterComponent {
 
   postService = inject(PostService)
 
-  // Initialise a varible for the form data to be stored in
-  createdCharacter: any = ''
 
     // Create the form object
     createCharacterForm = new FormGroup({
@@ -58,8 +56,6 @@ export class CreateCharacterComponent {
     // Function that collates all data from the form, uses the post function post service, and logs success or error
 
     createCharacter() {
-      // store form values in createdCharacter variable
-      this.createdCharacter = this.createCharacterForm.value
 
       const content = {
         AC: this.createCharacterForm.value.AC,
@@ -73,7 +69,9 @@ export class CreateCharacterComponent {
         initiative: this.createCharacterForm.value.initiative,
         intelligence: this.createCharacterForm.value.intelligence,
         level: this.createCharacterForm.value.level,
+        maxHp: this.createCharacterForm.value.hp,
         hp: this.createCharacterForm.value.hp,
+        hitdice: this.createCharacterForm.value.level,
         name: this.createCharacterForm.value.name,
         race: this.createCharacterForm.value.race,
         strength: this.createCharacterForm.value.strength,
@@ -83,7 +81,11 @@ export class CreateCharacterComponent {
         _type: 'character'
       }
 
-      this.postService.post(content).subscribe({
+      // Check if all fields have non-empty values
+    const allFieldsFilled = Object.values(content).every(value => value !== null && value !== undefined && value !== '');
+
+    if (allFieldsFilled) {
+            this.postService.post(content).subscribe({
         next: (response) => {
           this.postResponse = response;
           console.log('Character created successfully', response)
@@ -94,6 +96,11 @@ export class CreateCharacterComponent {
           console.error('Error creating character', err)
         }
       })
+    } else {
+      console.log('missing fields')
+    }
+
+
     }
 
 

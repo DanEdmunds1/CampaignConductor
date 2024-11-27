@@ -1,5 +1,7 @@
 import { Component, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { CharacterService } from '../character.service';
 import { WeaponsSpellcastingComponent } from '../weapons-spellcasting/weapons-spellcasting.component';
 import { SavingSkillsComponent } from '../saving-skills/saving-skills.component';
@@ -11,7 +13,7 @@ import { DmService } from '../dm.service';
 @Component({
   selector: 'app-character-sheet',
   standalone: true,
-  imports: [CommonModule, WeaponsSpellcastingComponent, SavingSkillsComponent],
+  imports: [CommonModule, WeaponsSpellcastingComponent, SavingSkillsComponent, ReactiveFormsModule],
   templateUrl: './character-sheet.component.html',
   styleUrl: './character-sheet.component.scss'
 })
@@ -96,7 +98,7 @@ export class CharacterSheetComponent {
     const selectedCreature = document.getElementById(name)
     console.log(selectedCreature)
 
-  
+
   }
 
   selectedCreature: any = null
@@ -128,8 +130,98 @@ export class CharacterSheetComponent {
   }
 
 
+  // Create the form object
+  hitDiceForm = new FormGroup({
+    numOfDice: new FormControl(0)
+  })
 
- 
 
+  response: any;
+  error: string | undefined;
+
+  updateHP(hp: number) {
+    this.dmService.updateHp(this.character._id, hp).subscribe({
+      next: (response) => {
+        this.response = response;
+        console.log('Heal successful', response)
+        this.loadCharacter()
+      },
+      error: (err) => {
+        this.error = `Error: ${err.message}`;
+        console.error('Error healing', err)
+      }
+    })
+  }
+
+  updateHitdice(hitdice: number) {
+    this.dmService.updateHitdice(this.character._id, hitdice).subscribe({
+      next: (response) => {
+        this.response = response;
+        console.log('Removal of hitdice successful', response)
+        this.loadCharacter()
+      },
+      error: (err) => {
+        this.error = `Error: ${err.message}`;
+        console.error('Error remove hitdice', err)
+      }
+    })
+  }
+
+  preventTyping(event: KeyboardEvent) {
+    event.preventDefault(); // Prevent any keyboard input in the hit dice input
+  }
+
+  useHitDice() {
+
+    const d6 = ['Sorcerer', 'Wizard'];
+    const d8 = ['Bard', 'Cleric', 'Druid', 'Monk', 'Rogue', 'Warlock'];
+    const d10 = ['Fighter', 'Paladin', 'Ranger'];
+    const d12 = ['Barbarian'];
+
+    const numOfDice = {
+      num: this.hitDiceForm.value.numOfDice,
+    }
+
+    let hp = this.character.hp
+    let newHp
+
+    let hitdice = this.character.hitdice
+    let newHitdice
+
+    if (d6.includes(this.character.class)) {
+      newHp = hp += this.characterService.rollDice(`${numOfDice.num}d6`)
+    } else if (d8.includes(this.character.class)) {
+      newHp = hp += this.characterService.rollDice(`${numOfDice.num}d8`)
+      console.log(numOfDice)
+    } else if (d10.includes(this.character.class)) {
+      newHp = hp += this.characterService.rollDice(`${numOfDice.num}d10`)
+    } else if (d12.includes(this.character.class)) {
+      newHp = hp += this.characterService.rollDice(`${numOfDice.num}d12`)
+    } else {
+      console.log('no class found')
+    }
+
+    newHitdice = hitdice -= numOfDice.num!
+
+
+    if (newHp < this.character.maxHp) {
+      this.updateHP(newHp)
+      this.updateHitdice(newHitdice)
+    } else if (newHp === this.character.maxHp) {
+      this.updateHP(this.character.maxHp)
+      console.log('fully healed')
+    } else if (newHp > this.character.maxHp) {
+      this.updateHP(this.character.maxHp)
+      console.log('fully healed')
+    }
+
+    this.hitDiceForm.reset()
+
+  }
+
+  longRest() {
+    this.updateHitdice(this.character.level)
+    this.updateHP(this.character.maxHp)
+  }
 
 }
