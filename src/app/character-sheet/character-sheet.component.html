@@ -75,9 +75,15 @@
                 <p id="hp">HP: {{character.hp}}</p>
                 <form class="hitdice-form" [formGroup]="hitDiceForm">
                     <label for="name">{{character.hitdice}} hit dice available</label>
-                    <input id="hitdice-input" type="number" formControlName="numOfDice" placeholder={{character.level}} min="0" max={{character.hitdice}} (keydown)="preventTyping($event)" />
+                    <div class="use-hitdice">
+                        <input id="hitdice-input" type="number" formControlName="numOfDice"
+                            placeholder={{character.level}} min="0" max={{character.hitdice}}
+                            (keydown)="preventTyping($event)" />
+                        <button (click)="useHitDice()">Use</button>
+                    </div>
+
                 </form>
-                <button (click)="useHitDice()">Use</button>
+
             </div>
             <button (click)="longRest()">Long Rest</button>
         </section>
@@ -91,22 +97,40 @@
     <div class="creatures-section">
         <p id="title">HOSTILE CREATURES</p>
         <section class="creatures-box">
-            <div *ngFor="let creature of creatures" class="creature" id="{{creature.name}}"
-                [class.selected]="creature === selectedCreature" (click)="handleSelect(creature, creature.name)">
-                <section class="creature-top" *ngIf="!creature.image">
-                    <p id="name">{{creature.name}}</p>
-                    <div class="important-stats"></div>
-                </section>
-                <section class="creature-info" *ngIf="!creature.image"></section>
+            <div *ngFor="let creature of creatures" id="{{creature.name}}"
+                [class.selected]="creature === selectedCreature" class="creature">
 
-                <section class="creature-top" *ngIf="creature.image" style="background-image: url({{creature.image}});">
+                <div class="creature-attack" *ngIf="creature === selectedCreature">
+                    <form class="atk-form" [formGroup]="atkForm">
 
-                    <div class="important-stats"></div>
-                </section>
+                        <select formControlName="dmgDice">
+                            <option value="" disabled selected>Select Attack</option>
+                            <option *ngFor="let atk of attacks" value={{atk.dmgDice}}>{{atk.name}} - {{atk.dmgDice}}
+                            </option>
+                        </select>
+                        <button (click)="attack()">Atk</button>
+                    </form>
 
-                <section class="creature-info" *ngIf="creature.image">
-                    <p id="name">{{creature.name}}</p>
-                </section>
+                </div>
+
+                <div class="creature-main" (click)="handleSelect(creature, creature.name)">
+                    <section class="creature-top" *ngIf="!creature.image">
+                        <p id="name">{{creature.name}}</p>
+                        <p>{{creature.hp}}</p>
+                        <div class="important-stats"></div>
+                    </section>
+                    <section class="creature-info" *ngIf="!creature.image"></section>
+
+                    <section class="creature-top" *ngIf="creature.image"
+                        style="background-image: url({{creature.image}});">
+
+                        <div class="important-stats"></div>
+                    </section>
+
+                    <section class="creature-info" *ngIf="creature.image">
+                        <p id="name">{{creature.name}}</p>
+                    </section>
+                </div>
 
             </div>
 

@@ -1,12 +1,17 @@
 $left-box-margin: 40px;
 
+@mixin column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .character-sheet {
     width: 100%;
 
     .top-row {
         display: flex;
-        margin-top: 20px;
-        margin-left: 20px;
+        margin: 20px;
         justify-content: space-around;
 
         .top-left-box {
@@ -51,10 +56,7 @@ $left-box-margin: 40px;
                         // Center and arrange titles
                         .title {
                             margin: 0 20px 0 20px;
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-
+                            @include column-center;
 
                             .title-name {
                                 font-size: 12px;
@@ -95,24 +97,36 @@ $left-box-margin: 40px;
             }
         }
     }
+
     .stats-box {
         display: flex;
         justify-content: center;
         width: 100%;
         border: 1px solid #FFD700;
+        padding: 10px 0 10px 0;
+
+
         .stat {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 0 10px 0 10px;
+
             .mod {
                 color: #FFD700;
             }
         }
     }
+
     .bottom-half {
         .bottom-left-box {
             margin: 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 20px;
+            height: 280px;
+            @include column-center;
+
             .ac-container {
                 height: 100px;
                 width: 100px;
@@ -125,71 +139,114 @@ $left-box-margin: 40px;
                 justify-content: center;
                 font-family: "Faculty Glyphic";
             }
+
             .hp-box {
+                @include column-center;
+                margin: 15px 0 15px 0;
+
                 #max {
                     color: gray;
                 }
+
+                #hp {
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    margin: 0;
+                }
+
+                .hitdice-form {
+                    @include column-center;
+
+                    label {
+                        text-align: center;
+                    }
+
+                    .use-hitdice {
+                        display: flex;
+                        justify-content: space-evenly;
+                        width: 100%;
+
+                        input {
+                            text-align: center;
+                        }
+                    }
+                }
             }
         }
     }
+
     .creatures-section {
         border: 1px solid #FFD700;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        @include column-center;
         width: 100%;
         margin: 0;
+
         #title {
             text-decoration: underline;
             font-size: 25px;
+            margin-bottom: 30px;
         }
+
         .creatures-box {
             display: flex;
             flex-wrap: wrap;
+
             .creature {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                border: 1px solid black;
-                margin: 30px;
-                width: 250px;
-                height: 250px;
-                .creature-top {
-                    font-weight: bold;
-                    height: 70%;
-                    background-color: #FFD700;
-                    width: 100%;
+                @include column-center;
+
+                
+                .creature-attack {
                     margin: 0;
-                    padding-top: 40px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    .important-stats {
-                        display: flex;
-                        width: 100%;
-                        justify-content: space-evenly;
-                    }
+
                 }
-                .creature-info {
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    align-items: center;
-                    height: 30%;
-                    padding-top: 15px;
-                    p {
-                        margin: 0 20px 0 0;
+
+                .creature-main {
+                    @include column-center;
+                    border: 1px solid black;
+                    margin: 0 30px 30px 30px;
+                    width: 250px;
+                    height: 250px;
+
+                    .creature-top {
                         font-weight: bold;
+                        height: 70%;
+                        background-color: #FFD700;
+                        width: 100%;
+                        margin: 0;
+                        padding-top: 40px;
+                        @include column-center;
+                        justify-content: center;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+
+                        .important-stats {
+                            display: flex;
+                            width: 100%;
+                            justify-content: space-evenly;
+                        }
+                    }
+
+                    .creature-info {
+                        @include column-center;
+                        flex-wrap: wrap;
+                        height: 30%;
+                        padding-top: 15px;
+
+                        p {
+                            margin: 0 20px 0 0;
+                            font-weight: bold;
+                        }
                     }
                 }
+
             }
         }
     }
 }
-.selected {
-    border: 1px solid red !important;
-}
+
+// .selected {
+//     border: 1px solid red !important;
+// }

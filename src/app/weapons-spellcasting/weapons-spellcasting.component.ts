@@ -74,7 +74,7 @@ export class WeaponsSpellcastingComponent {
         });
         this.charSpells = characterSpecificSpells
 
-        // store spells that the character does not have for the all spells dropdown
+        // store spells that the character does not posses, to be used for the all spells dropdown
         const spellsUserCanLearn = this.allSpells.filter(spell => !this.charSpells.includes(spell))
 
         this.learnableSpells = spellsUserCanLearn
@@ -187,7 +187,7 @@ export class WeaponsSpellcastingComponent {
 
   }
 
-  // Function to remove a weapon from the chracter sheet
+  // Function to remove a weapon from the character sheet
   deleteWeapon(id: string) {
     // call the post function
     this.postService.delete(id).subscribe({
