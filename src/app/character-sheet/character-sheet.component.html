@@ -116,15 +116,12 @@
                 <div class="creature-main" (click)="handleSelect(creature, creature.name)">
                     <section class="creature-top" *ngIf="!creature.image">
                         <p id="name">{{creature.name}}</p>
-                        <p>{{creature.hp}}</p>
-                        <div class="important-stats"></div>
                     </section>
                     <section class="creature-info" *ngIf="!creature.image"></section>
 
                     <section class="creature-top" *ngIf="creature.image"
                         style="background-image: url({{creature.image}});">
 
-                        <div class="important-stats"></div>
                     </section>
 
                     <section class="creature-info" *ngIf="creature.image">

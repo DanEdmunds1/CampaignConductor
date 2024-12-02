@@ -6,6 +6,12 @@ $left-box-margin: 40px;
     align-items: center;
 }
 
+@mixin background {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .character-sheet {
     width: 100%;
 
@@ -118,7 +124,6 @@ $left-box-margin: 40px;
         }
     }
 
-    .bottom-half {
         .bottom-left-box {
             margin: 20px;
             border: 1px solid black;
@@ -131,9 +136,7 @@ $left-box-margin: 40px;
                 height: 100px;
                 width: 100px;
                 background: url("https://i.imgur.com/QZd0Sk7.png");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
+                @include background;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -163,19 +166,10 @@ $left-box-margin: 40px;
                         text-align: center;
                     }
 
-                    .use-hitdice {
-                        display: flex;
-                        justify-content: space-evenly;
-                        width: 100%;
-
-                        input {
-                            text-align: center;
-                        }
-                    }
                 }
             }
         }
-    }
+    
 
     .creatures-section {
         border: 1px solid #FFD700;
@@ -214,19 +208,11 @@ $left-box-margin: 40px;
                         height: 70%;
                         background-color: #FFD700;
                         width: 100%;
-                        margin: 0;
                         padding-top: 40px;
                         @include column-center;
-                        justify-content: center;
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: cover;
+                        @include background;
+                        justify-content: center
 
-                        .important-stats {
-                            display: flex;
-                            width: 100%;
-                            justify-content: space-evenly;
-                        }
                     }
 
                     .creature-info {
@@ -246,7 +232,3 @@ $left-box-margin: 40px;
         }
     }
 }
-
-// .selected {
-//     border: 1px solid red !important;
-// }
