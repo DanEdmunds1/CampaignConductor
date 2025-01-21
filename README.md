@@ -3,8 +3,6 @@
 ## Description
 This is the first project I have created since graduating from my Software Engineering Immersive Course at General Assembly. It is a full-stack application that allows people to track Dungeons and Dragons combat information online. This application comprises a Sanity Headless CMS and a front-end Angular interface that consumes the API with full CRUD capabilities.
 
-This is a full-stack application that serves as a tool for users to compare how long, and how many steps, it would take to complete a variety of hiking trails. It consists of a back-end Django REST framework API and a front-end React user interface that consumes the API with full C.R.U.D (create, read, update, delete) capabilities.
-
 ## Deployment link: https://danedmunds1.github.io/CampaignConductor/
 
 ## Timeframe & Working Team (Solo/Pair/Group): This was an independent project which took 15 days to complete
